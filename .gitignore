@@ -1,0 +1,10 @@
+
+#ignore all backup files
+*~
+.*~
+*.vpp.*
+*.swp
+
+# ignore the subject
+'Projet POO_COO 2020.pdf'
+
