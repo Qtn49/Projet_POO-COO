@@ -1,9 +1,16 @@
 
-#ignore all backup files
+# ignore all backup files
+
 *~
 .*~
 *.vpp.*
 *.swp
+
+# ignore all additional tex files
+
+doc/*
+!doc/*.tex
+!doc/*.pdf
 
 # ignore the subject
 'Projet POO_COO 2020.pdf'
