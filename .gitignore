@@ -12,6 +12,10 @@ doc/*
 !doc/*.tex
 !doc/*.pdf
 
+scenario/*
+!scenario/*.tex
+!scenario/*.pdf
+
 # ignore the subject
 'Projet POO_COO 2020.pdf'
 
