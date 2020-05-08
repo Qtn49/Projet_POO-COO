@@ -17,7 +17,7 @@ public class Game {
 		super();
 		this.dungeon = dungeon;
 		view = new DungeonView();
-		controller = new DungeonController(dungeon, view);
+		controller = new DungeonController(this, view);
 	}
 
 	public boolean isOver() {
@@ -36,22 +36,17 @@ public class Game {
 		this.dungeon = dungeon;
 	}
 	
-	/**
-	 * @return the controller
-	 */
 	public DungeonController getController() {
 		return controller;
 	}
-
-	/**
-	 * @param controller the controller to set
-	 */
-	public void setController(DungeonController controller) {
-		this.controller = controller;
-	}
-
+	
 	public void start () {
 		controller.start();
+		
+		while (!over) {
+			controller.askForAction();
+		}
+		
 	}
 
 }

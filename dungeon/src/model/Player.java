@@ -117,4 +117,36 @@ public class Player {
 		throw new UnsupportedOperationException();
 	}
 
+
+
+	public void goNorth() {
+		
+		this.setCurrentLocation(getCurrentLocation().getNeighbors().get(Direction.NORTH));
+		
+	}
+
+
+
+	public void goEast() {
+		
+		setCurrentLocation(getCurrentLocation().getNeighbors().get(Direction.EAST));
+		
+	}
+
+
+
+	public void goWest() {
+
+		setCurrentLocation(getCurrentLocation().getNeighbors().get(Direction.WEST));
+		
+	}
+
+
+
+	public void goSouth() {
+	
+		setCurrentLocation(getCurrentLocation().getNeighbors().get(Direction.SOUTH));
+		
+	}
+
 }

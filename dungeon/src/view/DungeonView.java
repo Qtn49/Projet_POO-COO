@@ -4,45 +4,70 @@ import java.util.HashMap;
 import java.util.Map;
 
 import model.Console;
-import model.Dungeon;
+import model.Direction;
+import model.Music;
+import model.PlaySound;
 import model.Room;
 
 public class DungeonView {
+
+	private PlaySound sound;
 	
-	public void printRoomDescription (Room room) {
-		Console.print(room.toString());
-	}
-
-	@Override
-	public String toString() {
-		return "Hi welcome to the dungeon";
-	}
-
 	public void start() {
 		// TODO Auto-generated method stub
 		
-		Console.print("Hi thorn. Now the time has come for you to fetch all the statues of the youth.");
-		Console.print("You will finally get your parents together and with you.");
-		Console.print("But before that, you need to get through the terrible dungeon of Girk !");
+		Console.print("You're the heroic Thorn but right now you're struggling outside...");
+		Console.print("In front of you is holding a big dungeon. Yes, that's your goal... The dungeon of Girk !!");
+		Console.print("It contains the four statues that allow you to accomplish any wish once gathered !");
+		Console.print("But you have to be aware of the many dangers that are waiting for you inside...");
 		
+		
+	}
+	
+	public void playMusic(Music music) {
+		sound = new PlaySound(music);
+		sound.play();
+	}
+	
+	public void stopMusic() {
+		sound.stop();
 	}
 	
 	public void printNeighbors (Room room) {
 		
-		HashMap<String, Room> neighbors = room.getNeighbors();
+		HashMap<Direction, Room> neighbors = room.getNeighbors();
 		
-		printRoomDescription(room);
+		Console.print(room.toString());
 		
-		for (Map.Entry<String, Room> entry : neighbors.entrySet()) {
+		if (neighbors.size() == 0)
+			Console.print("You're stuck ! Well done !");
+		
+		for (Direction direction : neighbors.keySet()) {
 			
-			String direction = entry.getKey();
-			Room neighbor = entry.getValue();
+			if (room.getDoor(direction) != null)
+				Console.print("To the " + direction + " there is " + room.getDoor(direction));
 			
-			if (neighbor != null) {
-				Console.print("To the " + direction + " I have the " + neighbor.getName() + " room");
-			}
+			else if (neighbors.get(direction) != null)
+				Console.print("To the " + direction + " there is a room");
 			
 		}
+		
+	}
+
+	public String askForAction (Room room) {
+		
+		HashMap<Direction, Room> neighbors = room.getNeighbors();
+		String pattern = "";
+		
+		for (Direction direction : neighbors.keySet()) {
+			
+			Console.print("\t(" + direction.getNickname() + ") to go to the " + direction);
+			pattern += direction.getNickname();
+		}
+		
+		Console.print("Your choice ?\n=>", false);
+		
+		return pattern;
 		
 	}
 	

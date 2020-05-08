@@ -4,25 +4,23 @@ import java.util.*;
 public class Room {
 
 	private Collection<Item> items;
-	private Collection<Transition> transitions;
 	private boolean open;
-	private String name;
-	private HashMap<String, Room> neighbors;
-	private Room north;
-	private Room west;
-	private Room east;
-	private Room south;
+	private String description;
+	private HashMap<Direction, Room> neighbors;
+	private HashMap<Direction, Door> doors;
 
 	/**
-	 * @param name
+	 * @param description
 	 */
-	public Room(String name) {
-		this.name = name;
-		neighbors = new HashMap<String, Room>();
+	public Room(String description) {
+		this.description = description;
+		neighbors = new HashMap<Direction, Room>();
+		doors = new HashMap<Direction, Door>();
+
 	}
 
 	public String getName() {
-		return this.name;
+		return this.description;
 	}
 
 	/**
@@ -31,73 +29,41 @@ public class Room {
 	 */
 	public void setName(String name) {
 
-		this.name = name;
+		this.description = name;
 		
 	}
 
-	public Room getNorth() {
-		return neighbors.get("north");
+	public HashMap<Direction, Room> getNeighbors () {
+		return neighbors;
+	}
+	
+
+	public void setNeighbors (Direction direction, Room room) {
+		setNeighbors(direction, room, true);
 	}
 
 	/**
-	 * 
-	 * @param north
+	 * @param neighbors the neighbors to set
 	 */
-	public void setNorth(Room north) {
-
-		neighbors.put("north", north);
+	public void setNeighbors(Direction direction, Room room, boolean bothside) {
+		
+		neighbors.put(direction, room);
+		if (bothside)
+			room.neighbors.put(direction.opposedDirection(), this);
 		
 	}
 
-	public Room getWest() {
-		return neighbors.get("west");
+	public Door getDoor(Direction direction) {
+		return doors.get(direction);
 	}
-
-	/**
-	 * 
-	 * @param west
-	 */
-	public void setWest(Room west) {
-
-		neighbors.put("west", west);
-		
-	}
-
-	public Room getEast() {
-		return neighbors.get("east");
-	}
-
-	/**
-	 * 
-	 * @param east
-	 */
-	public void setEast(Room east) {
-
-		neighbors.put("east", east);
-		
-	}
-
-	public Room getSouth() {
-		return neighbors.get("south");
-	}
-
-	/**
-	 * 
-	 * @param south
-	 */
-	public void setSouth(Room south) {
-
-		neighbors.put("south", south);
-		
+	
+	public void setDoor(Direction direction, Door door) {
+		doors.put(direction, door);
 	}
 
 	@Override
 	public String toString() {
-		return "I am the " + name + " room.";
-	}
-	
-	public HashMap<String, Room> getNeighbors () {
-		return neighbors;
+		return description;
 	}
 
 }

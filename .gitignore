@@ -12,9 +12,15 @@ doc/*
 !doc/*.tex
 !doc/*.pdf
 
+# ignore all additional tex files from scenario
+
 scenario/*
 !scenario/*.tex
 !scenario/*.pdf
+
+# ignnore testSoundProject
+
+test
 
 # ignore the subject
 'Projet POO_COO 2020.pdf'
