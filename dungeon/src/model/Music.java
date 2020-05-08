@@ -12,10 +12,17 @@ public enum Music {
 	
 	private String filepath;
 	
+	/**
+	 * take a file path as a {@link String}
+	 * @param filepath
+	 */
 	Music (String filepath) {
 		this.filepath = filepath;
 	}
 	
+	/**
+	 * @return the filepath
+	 */
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

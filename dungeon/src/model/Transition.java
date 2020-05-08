@@ -1,7 +1,7 @@
 package model;
 import java.util.*;
 
-public class Transition {
+public abstract class Transition {
 
 	private Collection<Item> items;
 	private Collection<Trap> traps;

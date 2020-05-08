@@ -5,7 +5,8 @@ public class Dungeon {
 	private Player player;
 	
 	/**
-	 * @param start
+	 * Initiate a dungeon with a starting room
+	 * @param start : initiate room
 	 */
 	public Dungeon(Room start) {
 		super();
@@ -13,13 +14,17 @@ public class Dungeon {
 		player = new Player(start);
 	}
 
+	/**
+	 * 
+	 * @return initiate room
+	 */
 	public Room getStart() {
 		return this.start;
 	}
 
 	/**
 	 * 
-	 * @param start
+	 * @param start the initiate room to set
 	 */
 	public void setStart(Room start) {
 

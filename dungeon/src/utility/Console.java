@@ -1,4 +1,4 @@
-package model;
+package utility;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -8,6 +8,11 @@ public class Console {
 	private static final int TIME = 50;
 	private static Scanner scan = new Scanner(System.in);
 
+	/**
+	 * Method to print text in a fancy way
+	 * @param string : the text to print
+	 * @param jumpline : true adds a new line at the end
+	 */
 	public static void print (String string, boolean jumpline) {
 		
 		for (int i = 0; i < string.length(); i++) {
@@ -34,6 +39,10 @@ public class Console {
 		
 	}
 	
+	/**
+	 * Default print method which adds a new line
+	 * @param string : text to print
+	 */
 	public static void print (String string) {
 		
 		print(string, true);

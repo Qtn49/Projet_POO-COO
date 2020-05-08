@@ -2,46 +2,45 @@ package model;
 
 public enum Direction {
 	
-	NORTH ("north", 'N'),
-	EAST ("east", 'E'),
-	WEST ("west", 'W'),
-	SOUTH ("south", 'S');
+	NORTH ("north", Action.NORTH),
+	EAST ("east", Action.EAST),
+	WEST ("west", Action.WEST),
+	SOUTH ("south", Action.SOUTH);
 	
 	private String direction;
-	private char nickname;
+	private Action action;
 	
-	Direction(String direction, char nickname) {
+	/**
+	 * Constructor for Direction
+	 * @param direction : a direction to point to
+	 * @param action : the associated action enum
+	 */
+	Direction(String direction, Action action) {
 		
 		this.direction = direction;
-		this.nickname = nickname;
-	}
-	
-	public Direction getDirection(char nickname) {
-		switch (nickname) {
-		case 'N':
-			return NORTH;
-		case 'E':
-			return EAST;
-		case 'W':
-			return WEST;
-		default:
-			return SOUTH;
-		}
+		this.action = action;
 	}
 	
 	/**
-	 * @return the nickname
+	 * @return the direction as an action enum
 	 */
-	public char getNickname() {
-		return nickname;
+	public Action getAction() {
+		return action;
 	}
 
+	/**
+	 * return the name of the direction in lower case
+	 */
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		return direction;
 	}
 	
+	/**
+	 * Method to get the opposed direction
+	 * @return a Direction enum
+	 */
 	public Direction opposedDirection () {
 		
 		Direction opposed = null;
