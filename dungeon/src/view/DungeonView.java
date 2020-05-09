@@ -70,9 +70,9 @@ public class DungeonView {
 
 	}
 
-	public void transition(Direction direction, boolean open) {
+	public void transition(Direction direction) {
 		
-		Console.print("To the " + direction + " there is a door " + ((open) ? "and it is open" : "but it is locked..."));
+		Console.print("There is a door to the " + direction);
 		
 	}
 

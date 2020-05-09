@@ -35,26 +35,26 @@ public class Level {
 		r7.setItem(new Statue());
 		r10.setItem(new Statue());
 		
-		dungeon.getStart().setTransition(Direction.EAST, t1, r1);
-		r1.setTransition(Direction.SOUTH, t2, r2, true);
+		dungeon.getStart().setTransition(Direction.EAST, t1);
+		r1.setTransition(Direction.SOUTH, t2, true);
 		
-		r2.setTransition(Direction.WEST, t3, r3, true);
+		r2.setTransition(Direction.WEST, t3, true);
 		
-		r3.setTransition(Direction.SOUTH, t4, r4, true);
-		r3.setTransition(Direction.WEST, t5, r6, true);
+		r3.setTransition(Direction.SOUTH, t4, true);
+		r3.setTransition(Direction.WEST, t5, true);
 		
-		r4.setTransition(Direction.WEST, t6, r5, true);
+		r4.setTransition(Direction.WEST, t6, true);
 		
-		r5.setTransition(Direction.NORTH, t7, r6, true);
+		r5.setTransition(Direction.NORTH, t7, true);
 		
-		r6.setTransition(Direction.NORTH, t8, r7, true);
+		r6.setTransition(Direction.NORTH, t8, true);
 		
-		r7.setTransition(Direction.EAST, t9, dungeon.getStart());
-		r7.setTransition(Direction.NORTH, t10, r8, true);
+		r7.setTransition(Direction.EAST, t9);
+		r7.setTransition(Direction.NORTH, t10, true);
 		
-		r8.setTransition(Direction.EAST, t11, r9, true);
+		r8.setTransition(Direction.EAST, t11, true);
 		
-		r9.setTransition(Direction.EAST, t12, r10, true);
+		r9.setTransition(Direction.EAST, t12, true);
 		
 		return dungeon;
 		

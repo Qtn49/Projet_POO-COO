@@ -110,7 +110,7 @@ public class DungeonController {
 		
 		for (Entry<Direction, Transition> transition : room.getTransitions().entrySet()) {
 
-				view.transition(transition.getKey(), transition.getValue().getRoom().isOpen());
+				view.transition(transition.getKey());
 				player.addAction(transition.getKey().getAction());
 		}
 		

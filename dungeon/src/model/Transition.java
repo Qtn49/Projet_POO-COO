@@ -21,6 +21,12 @@ public class Transition {
 		if (music != null)
 			sound = new PlaySound(music.toString());
 	}
+	
+	public Transition(Transition transition) {
+		
+		this(transition.description, transition.room, transition.music);
+		
+	}
 
 	/**
 	 * @return the room

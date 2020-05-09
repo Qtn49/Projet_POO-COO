@@ -115,8 +115,8 @@ public class Room {
 	 * @param transition
 	 * @param room
 	 */
-	public void setTransition(Direction direction, Transition transition, Room room) {
-		setTransition(direction, transition, room, false);
+	public void setTransition(Direction direction, Transition transition) {
+		setTransition(direction, transition, false);
 	}
 
 	/**
@@ -126,11 +126,15 @@ public class Room {
 	 * @param room
 	 * @param bothside
 	 */
-	public void setTransition(Direction direction, Transition transition, Room room, boolean bothside) {
+	public void setTransition(Direction direction, Transition transition, boolean bothside) {
 		transitions.put(direction, transition);
 //		neighbors.put(direction, room);
-		if (bothside)
-			room.setTransition(direction.opposedDirection(), transition, room);
+		if (bothside) {
+			Room room = transition.getRoom();
+			Transition opposedTransition = new Transition(transition);
+			opposedTransition.setRoom(this);
+			room.setTransition(direction.opposedDirection(), opposedTransition);
+		}
 	}
 
 	/**
