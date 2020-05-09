@@ -3,24 +3,33 @@ package model;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class Player {
+public class Player extends Character {
 
 	private Game player;
 	private Weapon weapon;
 	private int health;
-	private boolean alive;
-	private Room currentLocation;
 	private int statues;
-	private Collection<Action> actions;
+	private boolean alive;
+	private Room currentRoom;
+	private ArrayList<Item> items;
+	private ArrayList<Action> actions;
 
+	public Player(Room room) {
+	
+		this("Thorn", room);		
+	}
+	
 	/**
 	 * initiate a player with its current {@link Room}
-	 * @param currentLocation
+	 * @param currentRoom
 	 */
-	public Player(Room currentLocation) {
-		this.currentLocation = currentLocation;
-		statues = 0;
+	public Player(String name, Room currentRoom) {
+		super(name);
+		this.currentRoom = currentRoom;
+		items = new ArrayList<Item>();
 		actions = new ArrayList<Action>();
+		alive = true;
+		statues = 0;
 	}
 
 	/**
@@ -98,25 +107,39 @@ public class Player {
 	/**
 	 * @return the currentLocation
 	 */
-	public Room getCurrentLocation() {
-		return currentLocation;
+	public Room getCurrentRoom() {
+		return currentRoom;
 	}
 
 
 
 	/**
-	 * @param currentLocation the currentLocation to set
+	 * @param currentRoom the currentLocation to set
 	 */
-	public void setCurrentLocation(Room currentLocation) {
-		this.currentLocation = currentLocation;
+	public void setCurrentRoom(Room currentRoom) {
+		this.currentRoom = currentRoom;
 	}
 
 
+
+	/**
+	 * @return the statues
+	 */
+	public int getStatues() {
+		return statues;
+	}
+
+	/**
+	 * @param statues the statues to set
+	 */
+	public void setStatues(int statues) {
+		this.statues = statues;
+	}
 
 	/**
 	 * @return the actions
 	 */
-	public Collection<Action> getActions() {
+	public ArrayList<Action> getActions() {
 		return actions;
 	}
 
@@ -127,27 +150,15 @@ public class Player {
 		actions.add(action);
 	}
 	
-	public void resetAction () {
+	public void takeItem() {
+		if (currentRoom.getItem() instanceof Statue)
+			statues++;
+		currentRoom.setItem(null);
+	}
+	
+	public void resetActions () {
 		actions.clear();
 	}
-
-	/**
-	 * @return the statues
-	 */
-	public int getStatues() {
-		return statues;
-	}
-
-
-
-	/**
-	 * @param statues the statues to set
-	 */
-	public void addStatue () {
-		statues++;
-	}
-
-
 
 	/**
 	 * 
@@ -163,7 +174,7 @@ public class Player {
 	 * @param direction
 	 */
 	public void move(Direction direction) {
-		setCurrentLocation(getCurrentLocation().getNeighbors().get(direction));
+		setCurrentRoom(getCurrentRoom().getTransitions().get(direction).getRoom());
 	}
 
 }

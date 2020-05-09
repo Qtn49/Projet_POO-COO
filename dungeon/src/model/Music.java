@@ -8,7 +8,13 @@ public enum Music {
 	ORC_AND_SWORD ("sounds/Orc and sword.wav"),
 	STEPS ("sounds/Steps.wav"),
 	THEME ("sounds/theme.wav"),
-	TEST ("sounds/annoyingSound.wav");
+	DUCK ("sounds/annoyingSound.wav"), 
+	TOILETS ("sounds/toiletFlush.wav"),
+	SNORE ("sounds/snoring.wav"), 
+	COUGH ("sounds/cough.wav"), 
+	RADIO ("sounds/radio.wav"),
+	BIRDS ("sounds/birds.wav"),
+	WATER ("sounds/water.wav");
 	
 	private String filepath;
 	

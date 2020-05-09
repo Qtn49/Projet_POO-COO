@@ -102,7 +102,7 @@ public class PlaySound {
 			init();
 		
 		clip.loop(Clip.LOOP_CONTINUOUSLY);
-//		clip.start();
+		clip.start();
 		
 		status = "play";
 	}

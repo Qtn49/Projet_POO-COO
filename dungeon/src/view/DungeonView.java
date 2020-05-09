@@ -1,13 +1,15 @@
 package view;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import model.Action;
+import model.Character;
 import model.Direction;
-import model.Music;
+import model.Ennemy;
+import model.Item;
 import model.PlaySound;
+import model.Player;
 import model.Room;
 import model.Statue;
+import model.Transition;
 import utility.Console;
 
 public class DungeonView {
@@ -27,84 +29,79 @@ public class DungeonView {
 	 * Start the intro of the story for the given statues
 	 * @param statues
 	 */
-	public void start(int statues) {
+	public void start(Player player, int statues) {
 		// TODO Auto-generated method stub
 		
-		Console.print("You're the heroic Thorn but right now you're struggling outside...");
+		Console.print("You're the heroic " + player.getName() + " but right now you're struggling outside...");
 		Console.print("In front of you is holding a big dungeon. Yes, that's your goal... The dungeon of Girk !!");
 		Console.print("It contains the " + statues + " statues that allow you to accomplish any wish once gathered !");
 		Console.print("But you have to be aware of the many dangers that are waiting for you inside...");
 		
 	}
-	
-	/**
-	 * play the given {@link Music}
-	 * if the given music is different, stops the previous one
-	 * @param music
-	 */
-	public void playMusic(Music music) {
-		
-		if (!music.toString().equals(sound.getFilepath()) && sound.getStatus().equals("play"))
-			sound.stop();
-		
-		if (!music.toString().equals(sound.getFilepath())) {
-			sound.setFilepath(music.toString());
-			sound.play();
-			
-		}
-	}
-	
-	/**
-	 * stop the current music
-	 */
-	public void stopMusic() {
-		sound.stop();
-	}
-	
-	/**
-	 * describe the given room
-	 * @param room
-	 */
-	public void describeRoom (Room room) {
-		
-		HashMap<Direction, Room> neighbors = room.getNeighbors();
+
+	public void room(Room room) {
+		// TODO Auto-generated method stub
 		
 		Console.print(room.toString());
 		
-		for (Direction direction : neighbors.keySet()) {
-			
-			if (room.getDoor(direction) != null)
-				Console.print("To the " + direction + " there is " + room.getDoor(direction));
-			
-			else if (neighbors.get(direction) != null)
-				Console.print("To the " + direction + " there is a room");
-			
-		}
+	}
+
+	public void character(Character character) {
 		
-		if (room.getItem() instanceof Statue)
-			Console.print("Well done ! You found a Statue !");
+		Console.print("There's " + character.toString());
 		
 	}
 
-	/**
-	 * Describe all the possible actions of the Player
-	 * @param room
-	 * @return
-	 */
-	public String askForAction (Room room) {
+	public void action(Action action) {
+
+		Console.print("\t(" + action + ") " + action.getDescription());
 		
-		HashMap<Direction, Room> neighbors = room.getNeighbors();
-		String pattern = "";
+	}
+
+	public void move(Room room, Direction direction) {
 		
-		for (Direction direction : neighbors.keySet()) {
-			
-			Console.print("\t(" + direction.getAction() + ") " + direction.getAction().getDescription());
-			pattern += direction.getAction();
+		Console.print(room.getTransitions().get(direction).toString());
+		
+	}
+
+	public void item(Item item) {
+
+		Console.print("Oh ! You just found an item and it is a " + item);
+
+	}
+
+	public void transition(Direction direction, boolean open) {
+		
+		Console.print("To the " + direction + " there is a door " + ((open) ? "and it is open" : "but it is locked..."));
+		
+	}
+
+	public void enemy(Ennemy ennemy) {
+		
+		Console.print("Hummm, seems like there is an ennemy...");
+		Console.print(ennemy);
+		
+	}
+
+	public void take(Item item, Player player) {
+		
+		if (item instanceof Statue) {
+			switch (player.getStatues()) {
+			case 0:
+				Console.print("Well done ! You just found your first " + item.getName());
+				break;
+			default:
+				Console.print("And one more statue for " + player.getName());
+				break;
+			}
 		}
+			
 		
-		Console.print("Your choice ?\n=>", false);
-		
-		return pattern;
+	}
+
+	public void leave() {
+
+		Console.print("You don't find it really interesting anyway, and you just leave it there");
 		
 	}
 	

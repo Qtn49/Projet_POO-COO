@@ -63,4 +63,19 @@ public enum Direction {
 		return opposed;
 	}
 	
+	public static Direction getDirection (Action action) {
+		switch (action) {
+		case NORTH:
+			return NORTH;
+		case WEST:
+			return WEST;
+		case EAST:
+			return EAST;
+		case SOUTH:
+			return SOUTH;
+		default:
+			return null;
+		}
+	}
+	
 }

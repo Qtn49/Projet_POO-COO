@@ -9,28 +9,17 @@ public class Game {
 	private Dungeon dungeon;
 	private DungeonController controller;
 	private DungeonView view;
-	private final int STATUES_GOAL;
-	
-	/**
-	 * Starts a game with an initiate dungeon and a default number of 4 statues
-	 * @param dungeon
-	 */
-	public Game(Dungeon dungeon) {
-		// TODO Auto-generated constructor stub
-		this(dungeon, 4);
-	}
 	
 	/**
 	 * Starts a game with an initiate dungeon and a number of statues to set
 	 * @param dungeon
 	 * @param statuesGoal
 	 */
-	public Game(Dungeon dungeon, int statuesGoal) {
+	public Game(Dungeon dungeon) {
 		super();
 		this.dungeon = dungeon;
 		view = new DungeonView();
 		controller = new DungeonController(this, view);
-		this.STATUES_GOAL = statuesGoal;
 	}
 
 	/**
@@ -72,13 +61,6 @@ public class Game {
 	public DungeonController getController() {
 		return controller;
 	}
-	
-	/**
-	 * @return the STATUES_GOAL
-	 */
-	public int getSTATUES_GOAL() {
-		return STATUES_GOAL;
-	}
 
 	/**
 	 * Starts the game until it's over
@@ -86,13 +68,7 @@ public class Game {
 	public void start () {
 		controller.start();
 		
-		while (true) {
-			controller.updatePlayerLocation();
-			controller.describeRoom();
-			if (controller.checkGameEnd())
-				break;
-			controller.readAction();
-		}
+		controller.updateView();
 		
 //		try {
 //			Thread.sleep(5000);

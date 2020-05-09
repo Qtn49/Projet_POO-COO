@@ -3,15 +3,21 @@ public class Dungeon {
 
 	private Room start;
 	private Player player;
+	private final int STATUES_GOAL;
+	
+	public Dungeon (Room start) {
+		this(start, 4);
+	}
 	
 	/**
 	 * Initiate a dungeon with a starting room
 	 * @param start : initiate room
 	 */
-	public Dungeon(Room start) {
+	public Dungeon(Room start, int statues) {
 		super();
 		this.start = start;
 		player = new Player(start);
+		STATUES_GOAL = statues;
 	}
 
 	/**
@@ -44,6 +50,13 @@ public class Dungeon {
 	 */
 	public void setPlayer(Player player) {
 		this.player = player;
+	}
+
+	/**
+	 * @return the sTATUES_GOAL
+	 */
+	public int getSTATUES_GOAL() {
+		return STATUES_GOAL;
 	}
 
 }

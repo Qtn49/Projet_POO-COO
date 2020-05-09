@@ -7,17 +7,23 @@ public class Console {
 
 	private static final int TIME = 50;
 	private static Scanner scan = new Scanner(System.in);
+	private static String pattern = "(?i)[";
 
 	/**
 	 * Method to print text in a fancy way
 	 * @param string : the text to print
 	 * @param jumpline : true adds a new line at the end
 	 */
-	public static void print (String string, boolean jumpline) {
+	public static void print (Object object, boolean jumpline) {
 		
-		for (int i = 0; i < string.length(); i++) {
+		String text = object.toString();
+		
+		if (jumpline)
+			text += '\n';
+		
+		for (int i = 0; i < text.length(); i++) {
 			
-			System.out.print(string.charAt(i));
+			System.out.print(text.charAt(i));
 			
 			try {
 				Thread.sleep(TIME);
@@ -34,18 +40,15 @@ public class Console {
 			e.printStackTrace();
 		}
 		
-		if (jumpline)
-			System.out.println();
-		
 	}
 	
 	/**
 	 * Default print method which adds a new line
 	 * @param string : text to print
 	 */
-	public static void print (String string) {
+	public static void print (Object object) {
 		
-		print(string, true);
+		print(object, true);
 		
 	}
 	
@@ -54,9 +57,12 @@ public class Console {
 	 * Read a character
 	 * @return the input
 	 */
-	public static char lire (Pattern pattern) {
+	public static char read () {
 		
 		char input = ' ';
+		
+		print("=>", false);
+		pattern += "]";
 		
 		// check if the token consists of the declared pattern
 		while(!scan.hasNext(pattern)){
@@ -68,7 +74,15 @@ public class Console {
 		
 		input = scan.next().toUpperCase().charAt(0);
 
+		pattern = "(?i)[";
+		
 		return input;
+		
+	}
+	
+	public static void addPattern (char input) {
+		
+		pattern += input;
 		
 	}
 	

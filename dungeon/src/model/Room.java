@@ -5,19 +5,17 @@ public class Room {
 
 	private Item item;
 	private String description;
-	private HashMap<Direction, Room> neighbors;
-	private HashMap<Direction, Door> doors;
+	private Ennemy ennemy;
+	private HashMap<Direction, Transition> transitions;
 	private Music music;
+	private boolean open;
 
 	/**
 	 * Initiate a room with a default music
 	 * @param description
 	 */
 	public Room(String description) {
-		this.description = description;
-		neighbors = new HashMap<Direction, Room>();
-		doors = new HashMap<Direction, Door>();
-		music = Music.THEME;
+		this(description, Music.THEME);
 	}
 
 	/**
@@ -29,22 +27,8 @@ public class Room {
 		super();
 		this.description = description;
 		this.music = music;
-	}
-
-
-
-	/**
-	 * @return the item
-	 */
-	public Item getItem() {
-		return item;
-	}
-
-	/**
-	 * @param items the items to set
-	 */
-	public void setItem (Item item) {
-		this.item = item;
+		open = true;
+		transitions = new HashMap<Direction, Transition>();
 	}
 
 	/**
@@ -66,53 +50,45 @@ public class Room {
 	}
 
 	/**
-	 * 
-	 * @return the neighbors
+	 * @return the item
 	 */
-	public HashMap<Direction, Room> getNeighbors () {
-		return neighbors;
-	}
-	
-
-	/**
-	 * add a neighbor room to the given direction 
-	 * @param direction
-	 * @param room
-	 */
-	public void setNeighbors (Direction direction, Room room) {
-		setNeighbors(direction, room, true);
+	public Item getItem() {
+		return item;
 	}
 
 	/**
-	 * add a neighbor room to the given direction with a given parameter for setting only one path
-	 * @param direction
-	 * @param room
-	 * @param bothside
+	 * @param item the item to set
 	 */
-	public void setNeighbors(Direction direction, Room room, boolean bothside) {
-		
-		neighbors.put(direction, room);
-		if (bothside)
-			room.neighbors.put(direction.opposedDirection(), this);
-		
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
 	/**
-	 * 
-	 * @param direction
-	 * @return the {@link Door} a the given {@link Direction} 
+	 * @return the ennemy
 	 */
-	public Door getDoor(Direction direction) {
-		return doors.get(direction);
+	public Ennemy getEnnemy() {
+		return ennemy;
 	}
-	
+
 	/**
-	 * 
-	 * @param direction
-	 * @param door
+	 * @param ennemy the ennemy to set
 	 */
-	public void setDoor(Direction direction, Door door) {
-		doors.put(direction, door);
+	public void setEnnemy(Ennemy ennemy) {
+		this.ennemy = ennemy;
+	}
+
+	/**
+	 * @return the open
+	 */
+	public boolean isOpen() {
+		return open;
+	}
+
+	/**
+	 * @param open the open to set
+	 */
+	public void setOpen(boolean open) {
+		this.open = open;
 	}
 
 	/**
@@ -127,6 +103,34 @@ public class Room {
 	 */
 	public void setMusic(Music music) {
 		this.music = music;
+	}
+	
+	public HashMap<Direction, Transition> getTransitions() {
+		return transitions;
+	}
+	
+	/**
+	 * set a unique transition
+	 * @param direction
+	 * @param transition
+	 * @param room
+	 */
+	public void setTransition(Direction direction, Transition transition, Room room) {
+		setTransition(direction, transition, room, false);
+	}
+
+	/**
+	 * set a new transition
+	 * @param direction
+	 * @param transition
+	 * @param room
+	 * @param bothside
+	 */
+	public void setTransition(Direction direction, Transition transition, Room room, boolean bothside) {
+		transitions.put(direction, transition);
+//		neighbors.put(direction, room);
+		if (bothside)
+			room.setTransition(direction.opposedDirection(), transition, room);
 	}
 
 	/**
