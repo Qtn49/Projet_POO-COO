@@ -45,8 +45,8 @@ public class Player extends Fighter {
 		actions.add(action);
 	}
 	
-	public void takeStatue (Statue statue) {
-		getEquipment().addStatue(statue);
+	public void takeStatue () {
+		getEquipment().addStatue(getLocation().getEquipment().removeStatue());
 	}
 	
 	public void resetActions () {

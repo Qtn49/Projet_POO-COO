@@ -41,12 +41,13 @@ public class PlaySound {
 	}
 
 	/**
-	 * @param silence
 	 * @param filepath
+	 * @param silence
 	 */
 	public PlaySound(String filepath, boolean silence) {
 		super();
 		this.filepath = filepath;
+		this.silence = silence;
 		status = "stop";
 		
 	}
@@ -109,10 +110,7 @@ public class PlaySound {
 					AudioSystem.getAudioInputStream(new File(filepath).getAbsoluteFile()); 
 			
 			// create clip reference 
-			clip = AudioSystem.getClip(); 
-			
-			// open audioInputStream to the clip 
-			clip.open(audioInputStream); 
+			clip = AudioSystem.getClip();  
 			
 		} catch (Exception e) {
 			System.out.println("Erreur du fichier audio");
@@ -131,9 +129,19 @@ public class PlaySound {
 		if (audioInputStream == null)
 			init();
 		
-		if (!silence) {
-			clip.loop(Clip.LOOP_CONTINUOUSLY);
-			clip.start();	
+		try {
+		
+			if (!silence) {
+				
+				// open audioInputStream to the clip 
+				clip.open(audioInputStream);
+				
+				clip.loop(Clip.LOOP_CONTINUOUSLY);
+				clip.start();	
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 		
 		status = "play";

@@ -6,6 +6,7 @@ import model.Enemy;
 import model.Fighter;
 import model.Player;
 import model.Room;
+import model.Statue;
 import utility.Console;
 
 public class DungeonView {
@@ -35,7 +36,7 @@ public class DungeonView {
 	public void room(Room room) {
 		
 		Console.print(room.toString());
-		Console.print();
+		System.out.println();
 		
 	}
 
@@ -48,7 +49,7 @@ public class DungeonView {
 	public void move(Room room, Direction direction) {
 		
 		Console.print(room.getTransitions().get(direction).toString());
-		Console.print();
+		System.out.println();
 		
 	}
 
@@ -68,14 +69,22 @@ public class DungeonView {
 	public void takeStatue (Player player) {
 	
 		switch (player.getEquipment().nbStatues()) {
-			case 0:
+			case 1:
 				Console.print("Well done ! You just found your first " + player.getEquipment().getLastStatue().getName());
 				break;
 			default:
 				Console.print("And one more statue for " + player.getName());
 				break;
 		}
-			
+
+		System.out.println();
+		
+	}
+	
+	public void health(Player player, Enemy enemy) {
+		
+		Console.print("You have " + player.getHealth() + " health points and " + enemy.getName() + " has " + enemy.getHealth() + " health points");
+		System.out.println();
 		
 	}
 
@@ -86,15 +95,13 @@ public class DungeonView {
 		if (attacker instanceof Player)
 			player = true;
 		
-		Console.print((player ? "You have " : attacker.getName() + " has ") + attacker.getHealth() + " health points and attacks " + (player ? defender.getName() : "you") + " with " + (player ? "your " : "his ") + attacker.getEquipment().getCurrentWeapon() + "(" + attacker.getEquipment().getCurrentWeapon().getDamage() + " damages)");
-		
 		if (attacker.isCriticHit()) {
 			Console.print("Critic shot !");
 		}
 		
 		Console.print((player ? "You give " + defender.getName() : attacker.getName() + " gives you ") +  "a " + attacker.getDamage() + " points attack");
 		
-		Console.print();
+		System.out.println();
 		
 	}
 	
@@ -105,7 +112,13 @@ public class DungeonView {
 		else
 			Console.print("Oh nahhhh you just died under the attacks of " + winner.getName());
 		
-		Console.print();
+		System.out.println();
+		
+	}
+
+	public void statue() {
+		
+		Console.print("Oh ! There's a statue here !");
 		
 	}
 	

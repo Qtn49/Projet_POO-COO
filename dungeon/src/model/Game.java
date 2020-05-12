@@ -15,9 +15,16 @@ public class Game {
 	 * @param statuesGoal
 	 */
 	public Game(Dungeon dungeon) {
+		this(dungeon, false);
+	}
+
+	/**
+	 * @param dungeon
+	 */
+	public Game(Dungeon dungeon, boolean silence) {
 		super();
 		this.dungeon = dungeon;
-		controller = new DungeonController(dungeon, new DungeonView());
+		controller = new DungeonController(dungeon, new DungeonView(), silence);
 	}
 
 	/**

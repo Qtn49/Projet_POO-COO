@@ -32,7 +32,7 @@ public class Level {
 
 		r1.setEnemy(new Wizard("Gandalf"));
 		
-		r3.getEquipment().addStatue(new Statue());
+		r1.getEquipment().addStatue(new Statue());
 		r5.getEquipment().addStatue(new Statue());
 		r7.getEquipment().addStatue(new Statue());
 		r10.getEquipment().addStatue(new Statue());

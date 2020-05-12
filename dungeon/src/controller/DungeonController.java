@@ -88,10 +88,11 @@ public class DungeonController {
 		
 		if (player.getLocation().getEquipment().hasStatue()) {
 		
-			view.takeStatue(player);
+			player.takeStatue();
+			
+			view.statue();
 			
 			player.addAction(Action.TAKE);
-		
 
 			readActions();
 			
@@ -173,12 +174,12 @@ public class DungeonController {
 	
 	public void move (Direction direction) {
 		
-		if (player.getLocation().getTransitions().get(direction).getSound() != null) 			
+		if (player.getLocation().getTransitions().get(direction).getSound() != null && !sound.isSilence()) 			
 			player.getLocation().getTransitions().get(direction).playSound();
 		
 		view.move(player.getLocation(), direction);
 		
-		if (player.getLocation().getTransitions().get(direction).getSound() != null)
+		if (player.getLocation().getTransitions().get(direction).getSound() != null && !sound.isSilence())
 			player.getLocation().getTransitions().get(direction).stopSound();
 
 		player.move(direction);
@@ -189,6 +190,8 @@ public class DungeonController {
 	}
 	
 	public void fight(boolean playerTurn) {
+		
+		view.health(player, player.getLocation().getEnemy());
 		
 		if (!player.isAlive() || !player.getLocation().getEnemy().isAlive()) {
 			if (player.isAlive())
