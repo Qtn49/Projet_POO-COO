@@ -1,28 +1,21 @@
 package view;
 
 import model.Action;
-import model.Character;
 import model.Direction;
-import model.Ennemy;
-import model.Item;
-import model.PlaySound;
+import model.Enemy;
+import model.Fighter;
 import model.Player;
 import model.Room;
-import model.Statue;
-import model.Transition;
 import utility.Console;
 
 public class DungeonView {
 
-	private PlaySound sound;
 	
 	/**
 	 * initiate the sound
 	 */
 	public DungeonView() {
-		
-		sound = new PlaySound();
-		
+				
 	}
 	
 	/**
@@ -30,25 +23,19 @@ public class DungeonView {
 	 * @param statues
 	 */
 	public void start(Player player, int statues) {
-		// TODO Auto-generated method stub
 		
 		Console.print("You're the heroic " + player.getName() + " but right now you're struggling outside...");
 		Console.print("In front of you is holding a big dungeon. Yes, that's your goal... The dungeon of Girk !!");
 		Console.print("It contains the " + statues + " statues that allow you to accomplish any wish once gathered !");
 		Console.print("But you have to be aware of the many dangers that are waiting for you inside...");
+		Console.print("");
 		
 	}
 
 	public void room(Room room) {
-		// TODO Auto-generated method stub
 		
 		Console.print(room.toString());
-		
-	}
-
-	public void character(Character character) {
-		
-		Console.print("There's " + character.toString());
+		Console.print();
 		
 	}
 
@@ -61,13 +48,8 @@ public class DungeonView {
 	public void move(Room room, Direction direction) {
 		
 		Console.print(room.getTransitions().get(direction).toString());
+		Console.print();
 		
-	}
-
-	public void item(Item item) {
-
-		Console.print("Oh ! You just found an item and it is a " + item);
-
 	}
 
 	public void transition(Direction direction) {
@@ -76,32 +58,54 @@ public class DungeonView {
 		
 	}
 
-	public void enemy(Ennemy ennemy) {
+	public void enemy(Enemy ennemy) {
 		
 		Console.print("Hummm, seems like there is an ennemy...");
 		Console.print(ennemy);
 		
 	}
 
-	public void take(Item item, Player player) {
-		
-		if (item instanceof Statue) {
-			switch (player.getStatues()) {
+	public void takeStatue (Player player) {
+	
+		switch (player.getEquipment().nbStatues()) {
 			case 0:
-				Console.print("Well done ! You just found your first " + item.getName());
+				Console.print("Well done ! You just found your first " + player.getEquipment().getLastStatue().getName());
 				break;
 			default:
 				Console.print("And one more statue for " + player.getName());
 				break;
-			}
 		}
 			
 		
 	}
 
-	public void leave() {
+	public void attack(Fighter attacker, Fighter defender) {
 
-		Console.print("You don't find it really interesting anyway, and you just leave it there");
+		boolean player = false;
+		
+		if (attacker instanceof Player)
+			player = true;
+		
+		Console.print((player ? "You have " : attacker.getName() + " has ") + attacker.getHealth() + " health points and attacks " + (player ? defender.getName() : "you") + " with " + (player ? "your " : "his ") + attacker.getEquipment().getCurrentWeapon() + "(" + attacker.getEquipment().getCurrentWeapon().getDamage() + " damages)");
+		
+		if (attacker.isCriticHit()) {
+			Console.print("Critic shot !");
+		}
+		
+		Console.print((player ? "You give " + defender.getName() : attacker.getName() + " gives you ") +  "a " + attacker.getDamage() + " points attack");
+		
+		Console.print();
+		
+	}
+	
+	public void defeat (Fighter winner, Fighter loser) {
+		
+		if (winner instanceof Player)
+			Console.print("Well done ! You defeated the terrible " + loser.getName());
+		else
+			Console.print("Oh nahhhh you just died under the attacks of " + winner.getName());
+		
+		Console.print();
 		
 	}
 	

@@ -1,4 +1,3 @@
-
 # ignore all backup files
 
 *~
@@ -24,7 +23,16 @@ test
 
 *.jar
 
+dungeon/Dungeon Project/
+*.zip
+
+# ignore all eclipse files
+
+.classpath
+.project
+.settings/
+
 # ignore the subject
-'Projet POO_COO 2020.pdf'
+Projet POO_COO 2020.pdf
 
 /.metadata/

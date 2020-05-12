@@ -8,7 +8,6 @@ public class Game {
 	private boolean win;
 	private Dungeon dungeon;
 	private DungeonController controller;
-	private DungeonView view;
 	
 	/**
 	 * Starts a game with an initiate dungeon and a number of statues to set
@@ -18,8 +17,7 @@ public class Game {
 	public Game(Dungeon dungeon) {
 		super();
 		this.dungeon = dungeon;
-		view = new DungeonView();
-		controller = new DungeonController(this, view);
+		controller = new DungeonController(dungeon, new DungeonView());
 	}
 
 	/**

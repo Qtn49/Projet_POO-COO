@@ -2,19 +2,14 @@ package controller;
 
 import java.util.Collection;
 import java.util.Map.Entry;
-import java.util.regex.Pattern;
 
 import model.Action;
 import model.Direction;
 import model.Dungeon;
-import model.Ennemy;
-import model.Game;
-import model.Item;
-import model.Music;
+import model.Enemy;
 import model.PlaySound;
 import model.Player;
 import model.Room;
-import model.Statue;
 import model.Transition;
 import utility.Console;
 import view.DungeonView;
@@ -24,38 +19,42 @@ public class DungeonController {
 //	private static final int MAX_ACTION = 4;
 	private Dungeon dungeon;
 	private DungeonView view;
-	private Game game;
 	private PlaySound sound;
 	private Player player;
 	private Action action;
-	private Ennemy ennemy;
-	private Item item;
 	
+	
+
+	/**
+	 * @param dungeon
+	 * @param view
+	 */
+	public DungeonController(Dungeon dungeon, DungeonView view) {
+		this(dungeon, view, false);
+	}
 
 	/**
 	 * initiate the controller
 	 * @param game
 	 * @param view
 	 */
-	public DungeonController(Game game, DungeonView view) {
+	public DungeonController(Dungeon dungeon, DungeonView view, boolean silence) {
 		super();
-		this.game = game;
 		this.view = view;
 		
-		sound = new PlaySound();
-		
-		dungeon = game.getDungeon();
+		sound = new PlaySound(silence);
+		this.dungeon = dungeon;
 		player = dungeon.getPlayer();
 	}
 	
 	public void start() {
-		sound.setFilepath(player.getCurrentRoom().getMusic().toString());
+		sound.setFilepath(player.getLocation().getMusic().toString());
 		sound.play();
 		view.start(player, dungeon.getSTATUES_GOAL());
 	}
 	
 	public void playMusic () {
-		String filepath = player.getCurrentRoom().getMusic().toString();
+		String filepath = player.getLocation().getMusic().toString();
 		
 		sound.setFilepath(filepath);
 		
@@ -65,37 +64,33 @@ public class DungeonController {
 	
 	public void describeRoom () {
 		
-		Room room = player.getCurrentRoom();
+		Room room = player.getLocation();
 		
 		view.room(room);
 	}
 	
 	public void checkEnnemy () {
 		
-		Ennemy ennemy = player.getCurrentRoom().getEnnemy();
+		Enemy enemy = player.getLocation().getEnemy();
 		
-		if (ennemy != null) {
-			view.enemy(ennemy);
-			for (Action action : ennemy.getActions()) {
-				player.addAction(action);
-			}
+		if (enemy != null) {
+			
+			view.enemy(enemy);
+			player.addAction(Action.ATTACK);
+			player.addAction(Action.FLEE);
 			
 			readActions();
 		}
 		
 	}
 	
-	public void checkItem () {
+	public void checkStatues () {
 		
-		Item item = player.getCurrentRoom().getItem();
+		if (player.getLocation().getEquipment().hasStatue()) {
 		
-		if (item != null) {
+			view.takeStatue(player);
 			
-			view.item(item);
-			
-			for (Action action : item.getActions()) {
-				player.addAction(action);
-			}
+			player.addAction(Action.TAKE);
 		
 
 			readActions();
@@ -106,7 +101,7 @@ public class DungeonController {
 	
 	public void checkTransitions () {
 		
-		Room room = player.getCurrentRoom();
+		Room room = player.getLocation();
 		
 		for (Entry<Direction, Transition> transition : room.getTransitions().entrySet()) {
 
@@ -136,6 +131,8 @@ public class DungeonController {
 		player.resetActions();
 		action = Action.getAction(Console.read());
 		
+		System.out.println();
+		
 		executeAction();
 		
 	}
@@ -156,23 +153,18 @@ public class DungeonController {
 			move(Direction.WEST);
 			break;
 		case ATTACK:
-//			fight(ennemy, true);
+			fight(true);
 			break;
 		case FLEE:
-//			if (Console.chance(20))
-//				player.setCurrentRoom(player.getPreviousRoom());
-//			else
-//				fight(ennemy, false);
+			if (Console.getChance(10))
+				player.getLocation().setEnemy(null);
+			else
+				fight(false);
 			break;
 		case TAKE:
-			view.take(player.getCurrentRoom().getItem(), player);
-			player.takeItem();
-			break;
-		case LEAVE:
-			view.leave();
+			view.takeStatue(player);
 			break;
 			
-
 		default:
 			break;
 		}
@@ -181,55 +173,63 @@ public class DungeonController {
 	
 	public void move (Direction direction) {
 		
-		sound.stop();
+		if (player.getLocation().getTransitions().get(direction).getSound() != null) 			
+			player.getLocation().getTransitions().get(direction).playSound();
 		
-		if (player.getCurrentRoom().getTransitions().get(direction).getSound() != null) 			
-			player.getCurrentRoom().getTransitions().get(direction).playSound();
+		view.move(player.getLocation(), direction);
 		
-		view.move(player.getCurrentRoom(), direction);
-		
-		if (player.getCurrentRoom().getTransitions().get(direction).getSound() != null)
-			player.getCurrentRoom().getTransitions().get(direction).stopSound();
+		if (player.getLocation().getTransitions().get(direction).getSound() != null)
+			player.getLocation().getTransitions().get(direction).stopSound();
 
 		player.move(direction);
 		
-		sound.setFilepath(player.getCurrentRoom().getMusic().toString());
+		sound.setFilepath(player.getLocation().getMusic().toString());
 		sound.play();
 		
 	}
 	
-//	public void fight(Ennemy ennemy, boolean playerTurn) {
-//		
-//		if (!player.isAlive() || !ennemy.isAlive())
-//			return;
-//		
-//		if (playerTurn) {
-//		
-//			player.attack(ennemy);
-//			
-//			view.weapon(player.getWeapon());
-//			view.attack(player);
-//			
-//		}else {
-//			
-//			ennemy.attack(player);
-//			
-//			view.weapon(ennemy.getWeapon());
-//			view.attack(ennemy);
-//			
-//		}
-//		
-//		fight(ennemy, !playerTurn);
-//		
-//	}
+	public void fight(boolean playerTurn) {
+		
+		if (!player.isAlive() || !player.getLocation().getEnemy().isAlive()) {
+			if (player.isAlive())
+				view.defeat(player, player.getLocation().getEnemy());
+			else
+				view.defeat(player.getLocation().getEnemy(), player);
+			return;
+		}
+				
+		Enemy enemy = player.getLocation().getEnemy();
+		
+		if (!sound.getFilepath().equals(enemy.getMusic().toString())) {
+			sound.setFilepath(enemy.getMusic().toString());
+//			sound.play();
+		}
+		
+		if (playerTurn) {
+		
+			player.attack(enemy);
+			
+			view.attack(player, enemy);
+			
+		}else {
+			
+			enemy.attack(player);
+			
+			view.attack(enemy, player);
+			
+		}
+		
+		fight(!playerTurn);
+		
+	}
 	
 	public void updateView() {
 		describeRoom();
 		checkEnnemy();
 		if (!player.isAlive())
 			return;
-		checkItem();
-		if (player.getStatues() == dungeon.getSTATUES_GOAL())
+		checkStatues();
+		if (player.getEquipment().nbStatues() == dungeon.getSTATUES_GOAL())
 			return;
 		checkTransitions();
 		updateView();

@@ -9,7 +9,7 @@ import javax.sound.sampled.Clip;
 public class PlaySound {
 
 	private Clip clip;
-	
+	private boolean silence;
 	private String status;
 	private AudioInputStream audioInputStream;
 	private String filepath;
@@ -29,12 +29,28 @@ public class PlaySound {
 	 */
 	public PlaySound(String filepath) { 
 
-		super();
-		this.filepath = filepath;
-		status = "stop";
+		this(filepath, false);
  
 	}
 	
+	/**
+	 * @param silence
+	 */
+	public PlaySound(boolean silence) {
+		this(null, silence);
+	}
+
+	/**
+	 * @param silence
+	 * @param filepath
+	 */
+	public PlaySound(String filepath, boolean silence) {
+		super();
+		this.filepath = filepath;
+		status = "stop";
+		
+	}
+
 	/**
 	 * @return the filepath
 	 */
@@ -62,6 +78,20 @@ public class PlaySound {
 	 */
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	/**
+	 * @return the silence
+	 */
+	public boolean isSilence() {
+		return silence;
+	}
+
+	/**
+	 * @param silence the silence to set
+	 */
+	public void setSilence(boolean silence) {
+		this.silence = silence;
 	}
 
 	/**
@@ -101,8 +131,10 @@ public class PlaySound {
 		if (audioInputStream == null)
 			init();
 		
-		clip.loop(Clip.LOOP_CONTINUOUSLY);
-		clip.start();
+		if (!silence) {
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
+			clip.start();	
+		}
 		
 		status = "play";
 	}

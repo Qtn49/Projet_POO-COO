@@ -7,7 +7,7 @@ public enum Action {
 	WEST ('W', "to go to the west"),
 	SOUTH ('S', "to go to the south"),
 	ATTACK ('A', "to attack the ennemy"),
-	FLEE ('F', "to try to flee (20% chance of success)"), 
+	FLEE ('F', "to try to flee (10% chance of success)"), 
 	TAKE ('T', "to take it"),
 	LEAVE ('L', "to move on and leave it");
 	

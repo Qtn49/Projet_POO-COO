@@ -1,7 +1,6 @@
 package utility;
 
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class Console {
 
@@ -52,6 +51,10 @@ public class Console {
 		
 	}
 	
+	public static void print () {
+		print("");
+	}
+	
 	/**
 	 * @param a regex pattern to check what input is required
 	 * Read a character
@@ -83,6 +86,12 @@ public class Console {
 	public static void addPattern (char input) {
 		
 		pattern += input;
+		
+	}
+	
+	public static boolean getChance (int percent) {
+		
+		return ((int) (Math.random() * 100 + 1)) <= percent;
 		
 	}
 	

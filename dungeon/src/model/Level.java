@@ -30,10 +30,12 @@ public class Level {
 		Transition t11 = new Transition("You're moving to the next room", r9);
 		Transition t12 = new Transition("You're moving to the next room", r10);
 
-		r3.setItem(new Statue());
-		r5.setItem(new Statue());
-		r7.setItem(new Statue());
-		r10.setItem(new Statue());
+		r1.setEnemy(new Wizard("Gandalf"));
+		
+		r3.getEquipment().addStatue(new Statue());
+		r5.getEquipment().addStatue(new Statue());
+		r7.getEquipment().addStatue(new Statue());
+		r10.getEquipment().addStatue(new Statue());
 		
 		dungeon.getStart().setTransition(Direction.EAST, t1);
 		r1.setTransition(Direction.SOUTH, t2, true);
