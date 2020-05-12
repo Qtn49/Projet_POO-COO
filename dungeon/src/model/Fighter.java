@@ -49,6 +49,15 @@ public abstract class Fighter extends Character {
 	}
 
 	/**
+	 * @param criticHit the criticHit to set
+	 */
+	public void setCriticHit(boolean criticHit) {
+		this.criticHit = criticHit;
+	}
+
+
+
+	/**
 	 * @return the health
 	 */
 	public int getHealth() {
