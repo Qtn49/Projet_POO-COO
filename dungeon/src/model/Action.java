@@ -7,6 +7,7 @@ public enum Action {
 	WEST ('W', "to go to the west"),
 	SOUTH ('S', "to go to the south"),
 	ATTACK ('A', "to attack the ennemy"),
+	POWERFUL_ATTACK ('P', "to attack with your powerful attack"),
 	FLEE ('F', "to try to flee (10% chance of success)"), 
 	TAKE ('T', "to take it"),
 	LEAVE ('L', "to move on and leave it");

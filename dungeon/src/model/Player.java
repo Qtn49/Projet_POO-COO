@@ -2,8 +2,12 @@ package model;
 
 import java.util.ArrayList;
 
+import utility.Console;
+
 public class Player extends Fighter {
 
+	private int nbCombats = 0;
+	
 	private ArrayList<Action> actions;
 	public Player(Room location) {
 	
@@ -37,6 +41,14 @@ public class Player extends Fighter {
 		return actions;
 	}
 
+	public int getNbCombats() {
+		return nbCombats;
+	}
+	
+	public void addCombat () {
+		nbCombats++;
+	}
+
 	/**
 	 * @param actions the actions to set
 	 */
@@ -50,6 +62,19 @@ public class Player extends Fighter {
 	
 	public void resetActions () {
 		actions.clear();
+	}
+	
+	@Override
+	public int getDamage() {
+
+		int damage = getEquipment().getCurrentWeapon().getDamage();
+		int chance = (nbCombats * 10) % 101;
+		
+		isCriticHit()
+		criticHit = Console.getChance();
+		
+		return criticHit ? damage * 2 : damage;
+		
 	}
 
 	/**
