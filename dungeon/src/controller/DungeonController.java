@@ -156,6 +156,8 @@ public class DungeonController {
 			move(Direction.WEST);
 			break;
 		case ATTACK:
+			player.addAction(Action.HIT);
+			player.addAction(Action.POWERFUL_HIT);
 			fight(true);
 			break;
 		case FLEE:
@@ -167,7 +169,8 @@ public class DungeonController {
 		case TAKE:
 			view.takeStatue(player);
 			break;
-			
+		case HIT:
+			player.addHit();
 		default:
 			break;
 		}
@@ -197,7 +200,23 @@ public class DungeonController {
 	
 	public void fight(boolean playerTurn) {
 		
+		Enemy enemy = player.getLocation().getEnemy();
+		
+		if (enemy.getMusic() != null && !enemy.getMusic().equals(sound.peek().getFilepath())) {
+			sound.pop().stop();
+			sound.push(new PlaySound(enemy.getMusic().toString()));
+			sound.peek().play();
+		}
+		
 		view.health(player, player.getLocation().getEnemy());
+		
+		if (playerTurn)
+			readActions();
+		else {
+			player.addAction(Action.HIT);
+			player.addAction(Action.POWERFUL_HIT);
+			player.getActions().get(1).setChance(player.getChance());
+		}
 		
 		if (!player.isAlive() || !player.getLocation().getEnemy().isAlive()) {
 			if (player.isAlive())
@@ -208,14 +227,6 @@ public class DungeonController {
 			sound.push(new PlaySound(player.getLocation().getMusic().toString()));
 			sound.peek().play();
 			return;
-		}
-				
-		Enemy enemy = player.getLocation().getEnemy();
-		
-		if (enemy.getMusic() != null) {
-			sound.pop().stop();
-			sound.push(new PlaySound(enemy.getMusic().toString()));
-			sound.peek().play();
 		}
 		
 		if (playerTurn) {

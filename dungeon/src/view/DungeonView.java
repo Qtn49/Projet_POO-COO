@@ -97,7 +97,7 @@ public class DungeonView {
 			Console.print("Critic shot !");
 		}
 		
-		Console.print((player ? "You give " + defender.getName() : attacker.getName() + " gives you ") +  "a " + attacker.getDamage() + " points attack");
+		Console.print((player ? "You give " + defender.getName() : attacker.getName() + " gives you") +  " a " + attacker.getDamage() + " points attack");
 		
 		System.out.println();
 		

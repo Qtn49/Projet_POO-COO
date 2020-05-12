@@ -6,7 +6,8 @@ import utility.Console;
 
 public class Player extends Fighter {
 
-	private int nbCombats = 0;
+	private int nbHit = 1;
+	private boolean missed;
 	
 	private ArrayList<Action> actions;
 	public Player(Room location) {
@@ -41,12 +42,26 @@ public class Player extends Fighter {
 		return actions;
 	}
 
-	public int getNbCombats() {
-		return nbCombats;
+	public int getHit() {
+		return nbHit;
 	}
 	
-	public void addCombat () {
-		nbCombats++;
+	/**
+	 * @return the missed
+	 */
+	public boolean isMissed() {
+		return missed;
+	}
+
+	/**
+	 * @param missed the missed to set
+	 */
+	public void setMissed(boolean missed) {
+		this.missed = missed;
+	}
+
+	public void addHit () {
+		nbHit++;
 	}
 
 	/**
@@ -65,16 +80,28 @@ public class Player extends Fighter {
 	}
 	
 	@Override
-	public int getDamage() {
-
-		int damage = getEquipment().getCurrentWeapon().getDamage();
-		int chance = (nbCombats * 10) % 101;
+	public int getChance() {
+		int chance = (nbHit * 10) % 100;
 		
-		isCriticHit()
-		criticHit = Console.getChance();
+		if (chance == 0)
+			chance = 100;
 		
-		return criticHit ? damage * 2 : damage;
+		return chance;
+	}
+	
+	@Override
+	public void attack(Fighter fighter) {
 		
+		if (Console.getChance(getChance())) {
+			attack(fighter);
+			missed = false;
+		}else
+			missed = true;
+		
+	}
+	
+	public void resetHit() {
+		nbHit = 1;
 	}
 
 	/**

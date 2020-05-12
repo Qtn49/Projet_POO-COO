@@ -7,13 +7,15 @@ public enum Action {
 	WEST ('W', "to go to the west"),
 	SOUTH ('S', "to go to the south"),
 	ATTACK ('A', "to attack the ennemy"),
-	POWERFUL_ATTACK ('P', "to attack with your powerful attack"),
+	HIT ('H', "to hit the enemy"),
+	POWERFUL_HIT ('P', "to attack with your best shot", 10),
 	FLEE ('F', "to try to flee (10% chance of success)"), 
 	TAKE ('T', "to take it"),
 	LEAVE ('L', "to move on and leave it");
 	
 	private char action;
 	private String description;
+	private int chance;
 	
 	/**
 	 * Contructor for Action
@@ -26,30 +28,64 @@ public enum Action {
 	}
 
 	/**
+	 * @param action
+	 * @param description
+	 * @param chance
+	 */
+	private Action(char action, String description, int chance) {
+		this(action, description);
+		this.chance = chance;
+	}
+
+	/**
 	 * @return the action
 	 */
 	public char getAction() {
 		return action;
+	}
+	
+	/**
+	 * @param action the action to set
+	 */
+	public void setAction(char action) {
+		this.action = action;
 	}
 
 	/**
 	 * @return the description
 	 */
 	public String getDescription() {
-		return description;
+		return (chance > 0) ? description + " (" + chance + "% of success)" : description;
+	}
+	
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	/**
+	 * @return the chance
+	 */
+	public int getChance() {
+		return chance;
+	}
+
+	/**
+	 * @param chance the chance to set
+	 */
+	public void setChance(int chance) {
+		this.chance = chance;
 	}
 	
 	public static Action getAction (char input) {
         for (Action action : values()) {
-        	if (action.action == input)
+        	if (action.getAction() == input)
         		return action;
         }
         return null;
     }
-	
-	public boolean isDirection () {
-		return this == NORTH || this == EAST || this == WEST || this == SOUTH;
-	}
 
 	/**
 	 * @return the action input as a string
