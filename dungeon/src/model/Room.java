@@ -3,12 +3,12 @@ import java.util.*;
 
 public class Room {
 
-	private Item item;
 	private String description;
-	private Ennemy ennemy;
+	private Enemy enemy;
 	private HashMap<Direction, Transition> transitions;
 	private Music music;
 	private boolean open;
+	private Equipment equipment;
 
 	/**
 	 * Initiate a room with a default music
@@ -29,6 +29,7 @@ public class Room {
 		this.music = music;
 		open = true;
 		transitions = new HashMap<Direction, Transition>();
+		equipment = new Equipment();
 	}
 
 	/**
@@ -50,31 +51,17 @@ public class Room {
 	}
 
 	/**
-	 * @return the item
-	 */
-	public Item getItem() {
-		return item;
-	}
-
-	/**
-	 * @param item the item to set
-	 */
-	public void setItem(Item item) {
-		this.item = item;
-	}
-
-	/**
 	 * @return the ennemy
 	 */
-	public Ennemy getEnnemy() {
-		return ennemy;
+	public Enemy getEnemy() {
+		return enemy;
 	}
 
 	/**
 	 * @param ennemy the ennemy to set
 	 */
-	public void setEnnemy(Ennemy ennemy) {
-		this.ennemy = ennemy;
+	public void setEnemy(Enemy enemy) {
+		this.enemy = enemy;
 	}
 
 	/**
@@ -105,6 +92,20 @@ public class Room {
 		this.music = music;
 	}
 	
+	/**
+	 * @return the equipment
+	 */
+	public Equipment getEquipment() {
+		return equipment;
+	}
+
+	/**
+	 * @param equipment the equipment to set
+	 */
+	public void setEquipment(Equipment equipment) {
+		this.equipment = equipment;
+	}
+
 	public HashMap<Direction, Transition> getTransitions() {
 		return transitions;
 	}

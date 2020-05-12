@@ -1,9 +1,5 @@
-import model.Action;
-import model.Direction;
 import model.Game;
 import model.Level;
-import model.Music;
-import model.PlaySound;
 
 public class Main {
 
