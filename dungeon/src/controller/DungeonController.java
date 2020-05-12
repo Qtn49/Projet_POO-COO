@@ -2,6 +2,7 @@ package controller;
 
 import java.util.Collection;
 import java.util.Map.Entry;
+import java.util.Stack;
 
 import model.Action;
 import model.Direction;
@@ -19,10 +20,10 @@ public class DungeonController {
 //	private static final int MAX_ACTION = 4;
 	private Dungeon dungeon;
 	private DungeonView view;
-	private PlaySound sound;
+	private Stack<PlaySound> sound;
 	private Player player;
 	private Action action;
-	
+	private boolean silence;
 	
 
 	/**
@@ -41,24 +42,25 @@ public class DungeonController {
 	public DungeonController(Dungeon dungeon, DungeonView view, boolean silence) {
 		super();
 		this.view = view;
-		
-		sound = new PlaySound(silence);
+		this.silence = silence;
+		sound = new Stack<PlaySound>();
+		sound.push(new PlaySound(silence));
 		this.dungeon = dungeon;
 		player = dungeon.getPlayer();
 	}
 	
 	public void start() {
-		sound.setFilepath(player.getLocation().getMusic().toString());
-		sound.play();
+		sound.peek().setFilepath(player.getLocation().getMusic().toString());
+		sound.peek().play();
 		view.start(player, dungeon.getSTATUES_GOAL());
 	}
 	
 	public void playMusic () {
 		String filepath = player.getLocation().getMusic().toString();
 		
-		sound.setFilepath(filepath);
+		sound.peek().setFilepath(filepath);
 		
-		sound.play();
+		sound.peek().play();
 		
 	}
 	
@@ -174,18 +176,22 @@ public class DungeonController {
 	
 	public void move (Direction direction) {
 		
-		if (player.getLocation().getTransitions().get(direction).getSound() != null && !sound.isSilence()) 			
-			player.getLocation().getTransitions().get(direction).playSound();
+		Transition transition = player.getLocation().getTransitions().get(direction);
+		
+		sound.push(new PlaySound(transition.getMusic().toString(), silence));
+		sound.peek().play();
 		
 		view.move(player.getLocation(), direction);
 		
-		if (player.getLocation().getTransitions().get(direction).getSound() != null && !sound.isSilence())
-			player.getLocation().getTransitions().get(direction).stopSound();
+		sound.pop().stop();
 
 		player.move(direction);
 		
-		sound.setFilepath(player.getLocation().getMusic().toString());
-		sound.play();
+		if (!sound.peek().getFilepath().equals(player.getLocation().getMusic().toString())) {
+			sound.pop().stop();
+			sound.push(new PlaySound(player.getLocation().getMusic().toString()));
+			sound.peek().play();
+		}
 		
 	}
 	
@@ -198,14 +204,18 @@ public class DungeonController {
 				view.defeat(player, player.getLocation().getEnemy());
 			else
 				view.defeat(player.getLocation().getEnemy(), player);
+			sound.pop().stop();
+			sound.push(new PlaySound(player.getLocation().getMusic().toString()));
+			sound.peek().play();
 			return;
 		}
 				
 		Enemy enemy = player.getLocation().getEnemy();
 		
-		if (!sound.getFilepath().equals(enemy.getMusic().toString())) {
-			sound.setFilepath(enemy.getMusic().toString());
-//			sound.play();
+		if (enemy.getMusic() != null) {
+			sound.pop().stop();
+			sound.push(new PlaySound(enemy.getMusic().toString()));
+			sound.peek().play();
 		}
 		
 		if (playerTurn) {

@@ -6,7 +6,6 @@ import model.Enemy;
 import model.Fighter;
 import model.Player;
 import model.Room;
-import model.Statue;
 import utility.Console;
 
 public class DungeonView {
@@ -84,7 +83,6 @@ public class DungeonView {
 	public void health(Player player, Enemy enemy) {
 		
 		Console.print("You have " + player.getHealth() + " health points and " + enemy.getName() + " has " + enemy.getHealth() + " health points");
-		System.out.println();
 		
 	}
 

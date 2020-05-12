@@ -3,7 +3,6 @@ package model;
 public class Transition {
 
 	private String description;
-	private PlaySound sound;
 	private Music music;
 	private Room room;
 	
@@ -12,20 +11,20 @@ public class Transition {
 	}
 	
 	/**
-	 * @param access
+	 * 
+	 * @param description
+	 * @param room
+	 * @param music
+	 * @param enterMusic
 	 */
 	public Transition(String description, Room room, Music music) {
 		this.description = description;
 		this.music = music;
 		this.room = room;
-		if (music != null)
-			sound = new PlaySound(music.toString());
 	}
-	
+
 	public Transition(Transition transition) {
-		
 		this(transition.description, transition.room, transition.music);
-		
 	}
 
 	/**
@@ -43,29 +42,17 @@ public class Transition {
 	}
 
 	/**
-	 * @return the sound
+	 * @return the music
 	 */
-	public PlaySound getSound() {
-		return sound;
+	public Music getMusic() {
+		return music;
 	}
 
 	/**
-	 * @param sound the sound to set
+	 * @param music the music to set
 	 */
-	public void setSound(PlaySound sound) {
-		this.sound = sound;
-	}
-
-	public void playSound() {
-		if (sound != null) {
-			sound.setFilepath(music.toString());
-			sound.play();
-		}
-	}
-	
-	public void stopSound() {
-		if (sound != null)
-			sound.stop();
+	public void setMusic(Music music) {
+		this.music = music;
 	}
 	
 	@Override

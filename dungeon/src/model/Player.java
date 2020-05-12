@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Player extends Fighter {
 
 	private ArrayList<Action> actions;
-
 	public Player(Room location) {
 	
 		this("Thorn", location);	

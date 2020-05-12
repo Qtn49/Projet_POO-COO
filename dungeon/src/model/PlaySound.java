@@ -64,7 +64,8 @@ public class PlaySound {
 	 */
 	public void setFilepath(String filepath) {
 		this.filepath = filepath;
-		init();
+		if (filepath == null)
+			init();
 	}
 
 	/**
@@ -96,6 +97,20 @@ public class PlaySound {
 	}
 
 	/**
+	 * @return the clip
+	 */
+	public Clip getClip() {
+		return clip;
+	}
+
+	/**
+	 * @param clip the clip to set
+	 */
+	public void setClip(Clip clip) {
+		this.clip = clip;
+	}
+
+	/**
 	 * initialize the file path and the music
 	 * @throws NoFileException 
 	 */
@@ -112,6 +127,9 @@ public class PlaySound {
 			// create clip reference 
 			clip = AudioSystem.getClip();  
 			
+			// open audioInputStream to the clip 
+			clip.open(audioInputStream);
+			
 		} catch (Exception e) {
 			System.out.println("Erreur du fichier audio");
 			System.exit(-1);
@@ -119,29 +137,29 @@ public class PlaySound {
 		
 	}
 	
+	public void play() {
+		play(true);
+	}
+	
 	/**
 	 * play the sound
 	 * initialize it if it's not
 	 */
-	public void play() {
+	public void play(boolean loop) {
 		
 		
 		if (audioInputStream == null)
 			init();
 		
-		try {
-		
-			if (!silence) {
-				
-				// open audioInputStream to the clip 
-				clip.open(audioInputStream);
-				
-				clip.loop(Clip.LOOP_CONTINUOUSLY);
-				clip.start();	
-			}
+		if (!silence) {
 			
-		} catch (Exception e) {
-			// TODO: handle exception
+			
+			
+			if (loop)
+				clip.loop(Clip.LOOP_CONTINUOUSLY);
+			
+			clip.start();
+				
 		}
 		
 		status = "play";
@@ -154,6 +172,14 @@ public class PlaySound {
 		clip.stop();
 		clip.close();
 		status = "stop";
+	}
+	
+	public boolean isPlaying() {
+		
+		if (clip == null)
+			return false;
+		
+		return clip.isActive();
 	}
 	
 }
