@@ -119,5 +119,26 @@ public class DungeonView {
 		Console.print("Oh ! There's a statue here !");
 		
 	}
+
+	public void attack() {
+
+		Console.print("You decide to attack and manage to attack him first");
+		System.out.println();
+		
+	}
+
+	public void successFlee() {
+		
+		Console.print("You successfully escaped ! The ennemy is now gone !");
+		System.out.println();
+		
+	}
+
+	public void failFlee() {
+		
+		Console.print("Oh noooo... You couldn't escaped and the enemy found you back !");
+		System.out.println();
+		
+	}
 	
 }

@@ -83,8 +83,11 @@ public enum Action {
 		if (weapon != null)
 			description += weapon.getName();
 		
-		if (chance > 0)
-			description += " (" + chance + "% of success)";
+		if (this == HIT)
+			description += " for " + weapon.getDamage() + " points";
+		
+		if (this == POWERFUL_HIT)
+			description += " for " + (weapon.getDamage() * 2) + " points " + "(" + chance + "% of success)";
 		
 		return description;
 	}
