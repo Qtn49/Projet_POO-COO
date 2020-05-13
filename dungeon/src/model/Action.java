@@ -7,8 +7,8 @@ public enum Action {
 	WEST ('W', "to go to the west"),
 	SOUTH ('S', "to go to the south"),
 	ATTACK ('A', "to attack the ennemy"),
-	HIT ('H', "to hit the enemy"),
-	POWERFUL_HIT ('P', "to attack with your best shot", 10),
+	HIT ('H', "to hit the enemy with your ", Weapon.FIST),
+	POWERFUL_HIT ('P', "to hit your enemy two times at once with your ", Action.HIT.getWeapon(), 10),
 	FLEE ('F', "to try to flee (10% chance of success)"), 
 	TAKE ('T', "to take it"),
 	LEAVE ('L', "to move on and leave it");
@@ -16,6 +16,7 @@ public enum Action {
 	private char action;
 	private String description;
 	private int chance;
+	private Weapon weapon;
 	
 	/**
 	 * Contructor for Action
@@ -38,6 +39,27 @@ public enum Action {
 	}
 
 	/**
+	 * @param action
+	 * @param description
+	 * @param weapon
+	 */
+	private Action(char action, String description, Weapon weapon) {
+		this(action, description);
+		this.setWeapon(weapon);
+	}
+
+	/**
+	 * @param action
+	 * @param description
+	 * @param chance
+	 * @param weapon
+	 */
+	private Action(char action, String description, Weapon weapon, int chance) {
+		this(action, description, weapon);
+		this.chance = chance;
+	}
+
+	/**
 	 * @return the action
 	 */
 	public char getAction() {
@@ -55,7 +77,16 @@ public enum Action {
 	 * @return the description
 	 */
 	public String getDescription() {
-		return (chance > 0) ? description + " (" + chance + "% of success)" : description;
+		
+		String description = this.description;
+		
+		if (weapon != null)
+			description += weapon.getName();
+		
+		if (chance > 0)
+			description += " (" + chance + "% of success)";
+		
+		return description;
 	}
 	
 	/**
@@ -79,6 +110,14 @@ public enum Action {
 		this.chance = chance;
 	}
 	
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
+	}
+
 	public static Action getAction (char input) {
         for (Action action : values()) {
         	if (action.getAction() == input)

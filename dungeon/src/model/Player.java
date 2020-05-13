@@ -60,10 +60,6 @@ public class Player extends Fighter {
 		this.missed = missed;
 	}
 
-	public void addHit () {
-		nbHit++;
-	}
-
 	/**
 	 * @param actions the actions to set
 	 */
@@ -92,11 +88,18 @@ public class Player extends Fighter {
 	@Override
 	public void attack(Fighter fighter) {
 		
-		if (Console.getChance(getChance())) {
-			attack(fighter);
+		if (isCriticHit() && Console.getChance(getChance())) {
 			missed = false;
-		}else
-			missed = true;
+			setCriticHit(true);
+			setDamage(getEquipment().getCurrentWeapon().getDamage() * 2);
+		}else if (isCriticHit())
+			setDamage(0);
+		else {
+			nbHit++;
+			setDamage(getEquipment().getCurrentWeapon().getDamage());
+		}
+		
+		fighter.loseHealth(getDamage());
 		
 	}
 	
@@ -120,6 +123,13 @@ public class Player extends Fighter {
 	public void move(Direction direction) {
 		
 		setLocation(getLocation().getTransitions().get(direction).getRoom());
+		
+	}
+
+	public void setCriticHit() {
+		
+		resetHit();
+		setCriticHit(true);
 		
 	}
 

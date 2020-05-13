@@ -8,6 +8,7 @@ public abstract class Fighter extends Character {
 	private int health;
 	private int chance;
 	private boolean criticHit;
+	private int damage;
 	
 	/**
 	 * @param name
@@ -26,13 +27,22 @@ public abstract class Fighter extends Character {
 
 	public int getDamage() {
 		
-		int damage = getEquipment().getCurrentWeapon().getDamage();
+		damage = getEquipment().getCurrentWeapon().getDamage();
 		
 		criticHit = Console.getChance(chance);
 		
 		return criticHit ? damage * 2 : damage;
 	}
 	
+	/**
+	 * @param damage the damage to set
+	 */
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
+
+
 	public int getChance() {
 		return chance;
 	}

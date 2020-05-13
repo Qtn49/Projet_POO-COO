@@ -157,6 +157,7 @@ public class DungeonController {
 			break;
 		case ATTACK:
 			player.addAction(Action.HIT);
+			player.getActions().get(0).setWeapon(player.getEquipment().getCurrentWeapon());
 			player.addAction(Action.POWERFUL_HIT);
 			fight(true);
 			break;
@@ -169,8 +170,9 @@ public class DungeonController {
 		case TAKE:
 			view.takeStatue(player);
 			break;
-		case HIT:
-			player.addHit();
+		case POWERFUL_HIT:
+			player.setCriticHit();
+			break;
 		default:
 			break;
 		}
@@ -202,7 +204,7 @@ public class DungeonController {
 		
 		Enemy enemy = player.getLocation().getEnemy();
 		
-		if (enemy.getMusic() != null && !enemy.getMusic().equals(sound.peek().getFilepath())) {
+		if (enemy.getMusic() != null && !enemy.getMusic().toString().equals(sound.peek().getFilepath())) {
 			sound.pop().stop();
 			sound.push(new PlaySound(enemy.getMusic().toString()));
 			sound.peek().play();
