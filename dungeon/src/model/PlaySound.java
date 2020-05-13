@@ -1,6 +1,7 @@
 package model;
 
 import java.io.File;
+import java.net.URL;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -120,9 +121,11 @@ public class PlaySound {
 		
 		try {
 
+			URL url = getClass().getResource(filepath);
+			
 			// create AudioInputStream object 
 			audioInputStream = 
-					AudioSystem.getAudioInputStream(new File(filepath).getAbsoluteFile()); 
+					AudioSystem.getAudioInputStream(url); 
 			
 			// create clip reference 
 			clip = AudioSystem.getClip();  
@@ -131,8 +134,7 @@ public class PlaySound {
 			clip.open(audioInputStream);
 			
 		} catch (Exception e) {
-			System.out.println("Erreur du fichier audio");
-			System.exit(-1);
+			
 		}
 		
 	}
