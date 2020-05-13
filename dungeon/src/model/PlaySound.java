@@ -1,6 +1,5 @@
 package model;
 
-import java.io.File;
 import java.net.URL;
 
 import javax.sound.sampled.AudioInputStream;
@@ -134,7 +133,8 @@ public class PlaySound {
 			clip.open(audioInputStream);
 			
 		} catch (Exception e) {
-			
+			System.out.println("Couldn't find the found, sorry");
+			System.exit(-1);
 		}
 		
 	}
