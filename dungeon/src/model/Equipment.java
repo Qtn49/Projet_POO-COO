@@ -1,19 +1,16 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class Equipment {
 
-	private Stack<Statue> statues;
 	private ArrayList<Weapon> weapons;
-	private ArrayList<Key> keys;
+	private ArrayList<Item> items;
 	private Weapon currentWeapon;
 	
 	public Equipment () {
-		statues = new Stack<Statue>();
 		weapons = new ArrayList<Weapon>();
-		keys = new ArrayList<Key>();
+		items = new ArrayList<Item>();
 	}
 
 	/**
@@ -40,28 +37,27 @@ public class Equipment {
 	/**
 	 * @return the keys
 	 */
-	public ArrayList<Key> getKeys() {
-		return keys;
+	public ArrayList<Item> getItems() {
+		return items;
 	}
 
-	public void addStatue (Statue statue) {
-		statues.push(statue);
-	}
-	
-	public int nbStatues () {
-		return statues.size();
+	public void addItem (Item item) {
+		
+		items.add(item);
+		
 	}
 	
 	public boolean hasStatue () {
-		return statues.size() > 0;
+		return nbItems(Item.STATUE) > 0;
 	}
 	
-	public Statue getLastStatue () {
-		return statues.peek();
-	}
-	
-	public Statue removeStatue () {
-		return statues.pop();
+	public Item removeStatue () {
+		for (Item item : items) {
+			if (item == Item.STATUE)
+				return item;
+		}
+		
+		return null;
 	}
 	
 	public void addWeapon (Weapon weapon) {
@@ -83,20 +79,19 @@ public class Equipment {
 		weapons.remove(weapon);
 	}
 	
-	public void addKey (Key key) {
-		keys.add(key);
-	}
-	
-	public int nbKeys () {
-		return keys.size();
+	public int nbItems (Item item) {
+		int n = 0;
+		
+		for (Item i : items) {
+			if (i == item)
+				n++;
+		}
+		
+		return n;
 	}
 	
 	public boolean hasKey () {
-		return keys.size() > 0;
-	}
-	
-	public void removeKey (Key key) {
-		keys.remove(key);
+		return nbItems(Item.KEY) > 0;
 	}
 	
 }

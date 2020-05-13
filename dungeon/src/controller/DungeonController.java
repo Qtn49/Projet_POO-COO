@@ -8,6 +8,7 @@ import model.Action;
 import model.Direction;
 import model.Dungeon;
 import model.Enemy;
+import model.Item;
 import model.PlaySound;
 import model.Player;
 import model.Room;
@@ -186,12 +187,15 @@ public class DungeonController {
 		
 		Transition transition = player.getLocation().getTransitions().get(direction);
 		
-		sound.push(new PlaySound(transition.getMusic().toString(), silence));
-		sound.peek().play();
+		if (transition.getMusic() != null) {
+			sound.push(new PlaySound(transition.getMusic().toString(), silence));
+			sound.peek().play();
+		}
 		
 		view.move(player.getLocation(), direction);
 		
-		sound.pop().stop();
+		if (transition.getMusic() != null)
+			sound.pop().stop();
 
 		player.move(direction);
 		
@@ -258,7 +262,7 @@ public class DungeonController {
 		if (!player.isAlive())
 			return;
 		checkStatues();
-		if (player.getEquipment().nbStatues() == dungeon.getSTATUES_GOAL())
+		if (player.getEquipment().nbItems(Item.STATUE) == dungeon.getSTATUES_GOAL())
 			return;
 		checkTransitions();
 		updateView();

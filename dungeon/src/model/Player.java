@@ -68,7 +68,7 @@ public class Player extends Fighter {
 	}
 	
 	public void takeStatue () {
-		getEquipment().addStatue(getLocation().getEquipment().removeStatue());
+		getEquipment().addItem(getLocation().getEquipment().removeStatue());
 	}
 	
 	public void resetActions () {

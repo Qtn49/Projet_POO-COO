@@ -32,10 +32,10 @@ public class Level {
 
 		r1.setEnemy(new Wizard("Gandalf"));
 		
-		r1.getEquipment().addStatue(new Statue());
-		r5.getEquipment().addStatue(new Statue());
-		r7.getEquipment().addStatue(new Statue());
-		r10.getEquipment().addStatue(new Statue());
+		r1.getEquipment().addItem(Item.STATUE);
+		r5.getEquipment().addItem(Item.STATUE);
+		r7.getEquipment().addItem(Item.STATUE);
+		r10.getEquipment().addItem(Item.STATUE);
 		
 		dungeon.getStart().setTransition(Direction.EAST, t1);
 		r1.setTransition(Direction.SOUTH, t2, true);

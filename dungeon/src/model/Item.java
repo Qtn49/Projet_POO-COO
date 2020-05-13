@@ -1,27 +1,20 @@
 package model;
 
-import java.util.ArrayList;
+public enum Item {
 
-public abstract class Item {
-
-	private ArrayList<Action> actions;
+	STATUE ("statue of the youth", Action.TAKE),
+	KEY ("magic key", Action.TAKE),
+	POTION ("potion", Action.DRINK);
+	
 	private String name;
+	private Action action;
 	
 	/**
 	 * @param name
 	 */
-	public Item(String name) {
-		super();
+	private Item(String name, Action action) {
 		this.name = name;
-		actions = new ArrayList<Action>();
-	}
-
-	public ArrayList<Action> getActions() {
-		return actions;
-	}
-	
-	public void addAction (Action action) {
-		actions.add(action);
+		this.action = action;
 	}
 
 	/**
@@ -36,6 +29,26 @@ public abstract class Item {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @return the action
+	 */
+	public Action getAction() {
+		return action;
+	}
+
+	/**
+	 * @param action the action to set
+	 */
+	public void setAction(Action action) {
+		this.action = action;
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return name;
 	}
 	
 }

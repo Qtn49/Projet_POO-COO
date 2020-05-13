@@ -11,7 +11,8 @@ public enum Action {
 	POWERFUL_HIT ('P', "to hit your enemy two times at once with your ", Action.HIT.getWeapon(), 10),
 	FLEE ('F', "to try to flee (10% chance of success)"), 
 	TAKE ('T', "to take it"),
-	LEAVE ('L', "to move on and leave it");
+	LEAVE ('L', "to move on and leave it"), 
+	DRINK ('D', "to drink it");
 	
 	private char action;
 	private String description;

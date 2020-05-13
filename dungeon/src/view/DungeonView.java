@@ -4,6 +4,7 @@ import model.Action;
 import model.Direction;
 import model.Enemy;
 import model.Fighter;
+import model.Item;
 import model.Player;
 import model.Room;
 import utility.Console;
@@ -67,9 +68,9 @@ public class DungeonView {
 
 	public void takeStatue (Player player) {
 	
-		switch (player.getEquipment().nbStatues()) {
+		switch (player.getEquipment().nbItems(Item.STATUE)) {
 			case 1:
-				Console.print("Well done ! You just found your first " + player.getEquipment().getLastStatue().getName());
+				Console.print("Well done ! You just found your first " + Item.STATUE);
 				break;
 			default:
 				Console.print("And one more statue for " + player.getName());

@@ -1,5 +1,5 @@
 package model;
-import java.util.*;
+import java.util.HashMap;
 
 public class Room {
 
@@ -9,6 +9,7 @@ public class Room {
 	private Music music;
 	private boolean open;
 	private Equipment equipment;
+	private Chest chest;
 
 	/**
 	 * Initiate a room with a default music
@@ -92,6 +93,14 @@ public class Room {
 		this.music = music;
 	}
 	
+	public Chest getChest() {
+		return chest;
+	}
+
+	public void setChest(Chest chest) {
+		this.chest = chest;
+	}
+
 	/**
 	 * @return the equipment
 	 */
