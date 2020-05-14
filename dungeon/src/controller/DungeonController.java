@@ -200,6 +200,10 @@ public class DungeonController {
 			player.setCriticHit(true);
 			player.resetHit();
 			break;
+		case UNLOCK:
+			player.getEquipment().removeItem(Item.KEY);
+			view.unlock();
+			break;
 		default:
 			break;
 		}
@@ -213,11 +217,12 @@ public class DungeonController {
 		if (!transition.getRoom().isOpen()) {
 			view.locked();
 			if (player.getEquipment().hasKey()) {
-				player.getEquipment().removeItem(Item.KEY);
+				view.hasItem(Item.KEY);
 				player.addAction(Action.UNLOCK);
-				view.unlock();
-			}
-			checkTransitions();
+				readActions();
+				transition.getRoom().setOpen(true);
+			}else
+				checkTransitions();
 		}
 		
 		if (transition.getMusic() != null) {
@@ -250,8 +255,12 @@ public class DungeonController {
 		
 		if (!player.isAlive() || !player.getLocation().getEnemy().isAlive()) {
 			if (player.isAlive()) {
+				if (enemy.getEquipment().nbItems() > 0) {
+					view.dropped();
+					player.getLocation().getEquipment().stealEquipment(enemy.getEquipment());
+				}
 				view.defeat(player, player.getLocation().getEnemy());
-				player.getLocation().getEquipment().stealEquipment(enemy.getEquipment());
+				player.getLocation().setEnemy(null);
 			}else {
 				view.defeat(player.getLocation().getEnemy(), player);
 				over = true;

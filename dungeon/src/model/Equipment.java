@@ -102,6 +102,10 @@ public class Equipment {
 		return null;
 	}
 
+	public int nbItems () {
+		return items.size();
+	}
+	
 	public Item removeItem(Item item) {
 		
 		return items.remove(item) ? item : null;
@@ -109,9 +113,8 @@ public class Equipment {
 	
 	public void stealEquipment (Equipment equipment) {
 		
-		for (Item item : equipment.items) {
-			items.add(equipment.removeItem(item));
-		}
+		items.addAll(equipment.items);
+		equipment.items.clear();
 		
 	}
 	
