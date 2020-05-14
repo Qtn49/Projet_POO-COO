@@ -94,4 +94,25 @@ public class Equipment {
 		return nbItems(Item.KEY) > 0;
 	}
 	
+	public Item getLastItem () {
+		
+		if (items.size() > 0)
+			return items.get(items.size() - 1);
+		
+		return null;
+	}
+
+	public Item removeItem(Item item) {
+		
+		return items.remove(item) ? item : null;
+	}
+	
+	public void stealEquipment (Equipment equipment) {
+		
+		for (Item item : equipment.items) {
+			items.add(equipment.removeItem(item));
+		}
+		
+	}
+	
 }

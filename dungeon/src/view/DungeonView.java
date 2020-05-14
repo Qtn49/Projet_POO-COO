@@ -95,10 +95,14 @@ public class DungeonView {
 			player = true;
 		
 		if (attacker.isCriticHit()) {
-			Console.print("Critic shot !");
+			if (player)
+				Console.print(attacker.getDamage() > 0 ? "Lucky you ! You give your best shot on this one" : "Ohhh nahhh ! You just missed it !");
+			else
+				Console.print("Critic shot from " + attacker.getName());
 		}
 		
-		Console.print((player ? "You give " + defender.getName() : attacker.getName() + " gives you") +  " a " + attacker.getDamage() + " points attack");
+		if (attacker.getDamage() > 0)
+			Console.print((player ? "You give " + defender.getName() : attacker.getName() + " gives you") +  " a " + attacker.getDamage() + " points attack");
 		
 		System.out.println();
 		
@@ -138,6 +142,38 @@ public class DungeonView {
 	public void failFlee() {
 		
 		Console.print("Oh noooo... You couldn't escaped and the enemy found you back !");
+		System.out.println();
+		
+	}
+
+	public void item(Item item) {
+		
+		Console.print("Well ! You just found a " + item + " !");
+		
+	}
+
+	public void takeItem(Player player) {
+		
+		Console.print("And one more " + player.getEquipment().getLastItem() + " for you !");
+		System.out.println();
+		
+	}
+	
+	public void locked () {
+		
+		Console.print("Huh ! Seems like this door is locked... You might need a key for that one");
+		
+	}
+
+	public void goal(int statues_GOAL) {
+
+		Console.print("Well done dude ! You just found all of the " + statues_GOAL + Item.STATUE);
+
+	}
+
+	public void unlock() {
+
+		Console.print("Yess the door is now unlocked ! But unfortunately, your key has lost its power... \nYou can't use it anymore...");
 		System.out.println();
 		
 	}

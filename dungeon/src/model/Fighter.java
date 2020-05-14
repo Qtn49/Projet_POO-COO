@@ -27,11 +27,7 @@ public abstract class Fighter extends Character {
 
 	public int getDamage() {
 		
-		damage = getEquipment().getCurrentWeapon().getDamage();
-		
-		criticHit = Console.getChance(chance);
-		
-		return criticHit ? damage * 2 : damage;
+		return damage;
 	}
 	
 	/**
@@ -104,7 +100,13 @@ public abstract class Fighter extends Character {
 	
 	public void attack(Fighter fighter) {
 		
-		fighter.loseHealth(getDamage());
+		damage = getEquipment().getCurrentWeapon().getDamage();
+		
+		criticHit = Console.getChance(chance);
+		
+		damage *= criticHit ? 2 : 1;
+		
+		fighter.loseHealth(damage);
 		
 	}
 	

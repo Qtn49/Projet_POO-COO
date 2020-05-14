@@ -126,10 +126,9 @@ public class Player extends Fighter {
 		
 	}
 
-	public void setCriticHit() {
-		
-		resetHit();
-		setCriticHit(true);
+	public void takeItem(Item item) {
+
+		getEquipment().addItem(getLocation().getEquipment().removeItem(item));
 		
 	}
 

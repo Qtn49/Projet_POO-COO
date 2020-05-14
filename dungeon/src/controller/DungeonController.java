@@ -2,7 +2,6 @@ package controller;
 
 import java.util.Collection;
 import java.util.Map.Entry;
-import java.util.Stack;
 
 import model.Action;
 import model.Direction;
@@ -21,11 +20,10 @@ public class DungeonController {
 //	private static final int MAX_ACTION = 4;
 	private Dungeon dungeon;
 	private DungeonView view;
-	private Stack<PlaySound> sound;
+	private PlaySound sound;
 	private Player player;
 	private Action action;
-	private boolean silence;
-	
+	private boolean over;
 
 	/**
 	 * @param dungeon
@@ -43,25 +41,37 @@ public class DungeonController {
 	public DungeonController(Dungeon dungeon, DungeonView view, boolean silence) {
 		super();
 		this.view = view;
-		this.silence = silence;
-		sound = new Stack<PlaySound>();
-		sound.push(new PlaySound(silence));
+		sound = new PlaySound(silence);
 		this.dungeon = dungeon;
 		player = dungeon.getPlayer();
 	}
 	
+	/**
+	 * @return the over
+	 */
+	public boolean isOver() {
+		return over;
+	}
+
+	/**
+	 * @param over the over to set
+	 */
+	public void setOver(boolean over) {
+		this.over = over;
+	}
+
 	public void start() {
-		sound.peek().setFilepath(player.getLocation().getMusic().toString());
-		sound.peek().play();
+		sound.setFilepath(player.getLocation().getMusic().toString());
+		sound.play();
 		view.start(player, dungeon.getSTATUES_GOAL());
 	}
 	
 	public void playMusic () {
 		String filepath = player.getLocation().getMusic().toString();
 		
-		sound.peek().setFilepath(filepath);
+		sound.setFilepath(filepath);
 		
-		sound.peek().play();
+		sound.play();
 		
 	}
 	
@@ -87,17 +97,29 @@ public class DungeonController {
 		
 	}
 	
-	public void checkStatues () {
+	public void checkItems () {
 		
-		if (player.getLocation().getEquipment().hasStatue()) {
+		Item item = player.getLocation().getEquipment().getLastItem();
 		
-			player.takeStatue();
+		while (item != null) {
 			
-			view.statue();
+			player.takeItem(item);
 			
-			player.addAction(Action.TAKE);
-
+			view.item(item);
+			
+			player.addAction(item.getAction());
+			
 			readActions();
+			
+			if (item == Item.POTION)
+				player.earnHealth(Item.POTION.getPoints());
+			
+			item = player.getLocation().getEquipment().getLastItem();
+			
+			if (player.getEquipment().nbItems(Item.STATUE) == dungeon.getSTATUES_GOAL()) {
+				over = true;
+				view.goal(dungeon.getSTATUES_GOAL());
+			}
 			
 		}
 		
@@ -172,10 +194,11 @@ public class DungeonController {
 			}
 			break;
 		case TAKE:
-			view.takeStatue(player);
+			view.takeItem(player);
 			break;
 		case POWERFUL_HIT:
-			player.setCriticHit();
+			player.setCriticHit(true);
+			player.resetHit();
 			break;
 		default:
 			break;
@@ -187,69 +210,75 @@ public class DungeonController {
 		
 		Transition transition = player.getLocation().getTransitions().get(direction);
 		
+		if (!transition.getRoom().isOpen()) {
+			view.locked();
+			if (player.getEquipment().hasKey()) {
+				player.getEquipment().removeItem(Item.KEY);
+				player.addAction(Action.UNLOCK);
+				view.unlock();
+			}
+			checkTransitions();
+		}
+		
 		if (transition.getMusic() != null) {
-			sound.push(new PlaySound(transition.getMusic().toString(), silence));
-			sound.peek().play();
+			sound.stop();
+			sound.setFilepath(transition.getMusic().toString());
+			sound.play(false);
 		}
 		
 		view.move(player.getLocation(), direction);
-		
-		if (transition.getMusic() != null)
-			sound.pop().stop();
 
 		player.move(direction);
 		
-		if (!sound.peek().getFilepath().equals(player.getLocation().getMusic().toString())) {
-			sound.pop().stop();
-			sound.push(new PlaySound(player.getLocation().getMusic().toString(), silence));
-			sound.peek().play();
-		}
+	
+		sound.stop();
+		sound.setFilepath(player.getLocation().getMusic().toString());
+		sound.play();
 		
 	}
 	
 	public void fight(boolean playerTurn) {
 		
 		Enemy enemy = player.getLocation().getEnemy();
+		player.setCriticHit(false);
 		
-		if (enemy.getMusic() != null && !enemy.getMusic().toString().equals(sound.peek().getFilepath())) {
-			sound.pop().stop();
-			sound.push(new PlaySound(enemy.getMusic().toString(), silence));
-			sound.peek().play();
+		if (enemy.getMusic() != null && !enemy.getMusic().toString().equals(sound.getFilepath())) {
+			sound.stop();
+			sound.setFilepath(enemy.getMusic().toString());
+			sound.play();
+		}
+		
+		if (!player.isAlive() || !player.getLocation().getEnemy().isAlive()) {
+			if (player.isAlive()) {
+				view.defeat(player, player.getLocation().getEnemy());
+				player.getLocation().getEquipment().stealEquipment(enemy.getEquipment());
+			}else {
+				view.defeat(player.getLocation().getEnemy(), player);
+				over = true;
+			}
+			sound.stop();
+			sound.setFilepath(player.getLocation().getMusic().toString());
+			sound.play();
+			return;
 		}
 		
 		view.health(player, player.getLocation().getEnemy());
 		
-		if (playerTurn)
-			readActions();
-		else {
-			player.addAction(Action.HIT);
-			player.addAction(Action.POWERFUL_HIT);
-			player.getActions().get(1).setChance(player.getChance());
-		}
-		
-		if (!player.isAlive() || !player.getLocation().getEnemy().isAlive()) {
-			if (player.isAlive())
-				view.defeat(player, player.getLocation().getEnemy());
-			else
-				view.defeat(player.getLocation().getEnemy(), player);
-			sound.pop().stop();
-			sound.push(new PlaySound(player.getLocation().getMusic().toString(), silence));
-			sound.peek().play();
-			return;
-		}
-		
 		if (playerTurn) {
-		
+			readActions();
+			
 			player.attack(enemy);
 			
 			view.attack(player, enemy);
 			
 		}else {
+			player.addAction(Action.HIT);
+			player.addAction(Action.POWERFUL_HIT);
+			player.getActions().get(1).setChance(player.getChance());
 			
 			enemy.attack(player);
 			
 			view.attack(enemy, player);
-			
 		}
 		
 		fight(!playerTurn);
@@ -259,10 +288,10 @@ public class DungeonController {
 	public void updateView() {
 		describeRoom();
 		checkEnnemy();
-		if (!player.isAlive())
+		if (over)
 			return;
-		checkStatues();
-		if (player.getEquipment().nbItems(Item.STATUE) == dungeon.getSTATUES_GOAL())
+		checkItems();
+		if (over)
 			return;
 		checkTransitions();
 		updateView();

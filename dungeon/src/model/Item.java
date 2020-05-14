@@ -4,10 +4,11 @@ public enum Item {
 
 	STATUE ("statue of the youth", Action.TAKE),
 	KEY ("magic key", Action.TAKE),
-	POTION ("potion", Action.DRINK);
+	POTION ("potion", Action.DRINK, 10);
 	
 	private String name;
 	private Action action;
+	private int points;
 	
 	/**
 	 * @param name
@@ -15,6 +16,17 @@ public enum Item {
 	private Item(String name, Action action) {
 		this.name = name;
 		this.action = action;
+	}
+
+	/**
+	 * @param name
+	 * @param action
+	 * @param points
+	 */
+	private Item(String name, Action action, int points) {
+		this.name = name;
+		this.action = action;
+		this.points = points;
 	}
 
 	/**
@@ -45,6 +57,20 @@ public enum Item {
 		this.action = action;
 	}
 	
+	/**
+	 * @return the points
+	 */
+	public int getPoints() {
+		return points;
+	}
+
+	/**
+	 * @param points the points to set
+	 */
+	public void setPoints(int points) {
+		this.points = points;
+	}
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

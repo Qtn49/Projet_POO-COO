@@ -12,7 +12,8 @@ public enum Action {
 	FLEE ('F', "to try to flee (10% chance of success)"), 
 	TAKE ('T', "to take it"),
 	LEAVE ('L', "to move on and leave it"), 
-	DRINK ('D', "to drink it");
+	DRINK ('D', "to drink it"),
+	UNLOCK ('U', "to unlock the door");
 	
 	private char action;
 	private String description;

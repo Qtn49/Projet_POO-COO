@@ -64,7 +64,7 @@ public class PlaySound {
 	 */
 	public void setFilepath(String filepath) {
 		this.filepath = filepath;
-		if (filepath == null)
+		if (clip == null)
 			init();
 	}
 
@@ -151,6 +151,9 @@ public class PlaySound {
 		
 		
 		if (audioInputStream == null)
+			init();
+		
+		if (status.equals("stop"))
 			init();
 		
 		if (!silence) {

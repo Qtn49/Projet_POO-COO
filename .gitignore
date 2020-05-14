@@ -35,4 +35,7 @@ dungeon/Dungeon Project/
 # ignore the subject
 Projet POO_COO 2020.pdf
 
+*.sh
+
+dungeon/.metadata
 /.metadata/
