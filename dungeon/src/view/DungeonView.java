@@ -162,12 +162,14 @@ public class DungeonView {
 	public void locked () {
 		
 		Console.print("Huh ! Seems like this door is locked... You might need a key for that one");
+		System.out.println();
 		
 	}
 
 	public void goal(int statues_GOAL) {
 
 		Console.print("Well done dude ! You just found all of the " + statues_GOAL + Item.STATUE);
+		System.out.println();
 
 	}
 
@@ -176,6 +178,18 @@ public class DungeonView {
 		Console.print("Yess the door is now unlocked ! But unfortunately, your key has lost its power... \nYou can't use it anymore...");
 		System.out.println();
 		
+	}
+
+	public void hasItem(Item item) {
+		
+		Console.print("Well nice ! It seems like you got a " + item);
+		
+	}
+
+	public void dropped() {
+		
+		Console.print("Hmmm interesting, seems like the enemy just dropped some stuff...");
+		System.out.println();
 	}
 	
 }

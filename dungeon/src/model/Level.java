@@ -31,8 +31,8 @@ public class Level {
 		Transition t12 = new Transition("You're moving to the next room", r10);
 
 		r1.setEnemy(new Wizard("Gandalf"));
+		r1.getEnemy().getEquipment().addItem(Item.KEY);
 		
-		r1.getEquipment().addItem(Item.KEY);
 		r3.getEquipment().addItem(Item.STATUE);
 		r5.getEquipment().addItem(Item.STATUE);
 		r7.getEquipment().addItem(Item.STATUE);
