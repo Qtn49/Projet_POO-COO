@@ -203,7 +203,6 @@ public class DungeonController {
 		case UNLOCK:
 			player.getEquipment().removeItem(Item.KEY);
 			view.unlock();
-			player.getLocation().setOpen(true);
 			break;
 		default:
 			break;
@@ -221,6 +220,7 @@ public class DungeonController {
 				view.hasItem(Item.KEY);
 				player.addAction(Action.UNLOCK);
 				readActions();
+				transition.getRoom().setOpen(true);
 			}else
 				checkTransitions();
 		}

@@ -7,7 +7,7 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 		
-		Game game = new Game(Level.initLevel1());
+		Game game = new Game(Level.initLevel1(), true);
 
 		game.start();
 		
