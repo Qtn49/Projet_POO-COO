@@ -2,19 +2,19 @@ package model;
 
 public enum Music {
 
-	FIRST_DOOR ("data/sounds/First door.wav"),
-	DOOR_OPEN ("data/sounds/Door open.wav"),
-	INTRO ("data/sounds/intro.wav"),
-	ORC_AND_SWORD ("data/sounds/Orc and sword.wav"),
-	STEPS ("data/sounds/Steps.wav"),
-	THEME ("data/sounds/theme.wav"),
-	DUCK ("data/sounds/annoyingSound.wav"), 
-	TOILETS ("data/sounds/toiletFlush.wav"),
-	SNORE ("data/sounds/snoring.wav"), 
-	COUGH ("data/sounds/cough.wav"), 
-	RADIO ("data/sounds/radio.wav"),
-	BIRDS ("data/sounds/birds.wav"),
-	WATER ("data/sounds/water.wav");
+	FIRST_DOOR ("/ressources/sounds/First door.wav"),
+	DOOR_OPEN ("/ressources/sounds/Door open.wav"),
+	INTRO ("/ressources/sounds/intro.wav"),
+	ORC_AND_SWORD ("/ressources/sounds/Orc and sword.wav"),
+	STEPS ("/ressources/sounds/Steps.wav"),
+	THEME ("/ressources/sounds/theme.wav"),
+	DUCK ("/ressources/sounds/annoyingSound.wav"), 
+	TOILETS ("/ressources/sounds/toiletFlush.wav"),
+	SNORE ("/ressources/sounds/snoring.wav"), 
+	COUGH ("/ressources/sounds/cough.wav"), 
+	RADIO ("/ressources/sounds/radio.wav"),
+	BIRDS ("/ressources/sounds/birds.wav"),
+	WATER ("/ressources/sounds/water.wav");
 	
 	private String filepath;
 	
