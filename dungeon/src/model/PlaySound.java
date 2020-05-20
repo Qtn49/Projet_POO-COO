@@ -133,7 +133,7 @@ public class PlaySound {
 			clip.open(audioInputStream);
 			
 		} catch (Exception e) {
-			System.out.println("Couldn't find the ound, sorry");
+			System.out.println("Couldn't find the sound, sorry");
 			System.exit(-1);
 		}
 		

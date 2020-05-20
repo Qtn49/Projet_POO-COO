@@ -1,15 +1,17 @@
 package application;
-import model.Game;
-import model.Level;
+import controller.MenuController;
+import model.Menu;
+import view.MenuView;
 
 public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 		
-		Game game = new Game(Level.initLevel1(), true);
-
-		game.start();
+		Menu menu = new Menu();
+		MenuView menuView = new MenuView();
+		MenuController controller = new MenuController(menuView, menu);
+		controller.startMenu();
 		
 	}
 

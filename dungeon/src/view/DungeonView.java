@@ -29,7 +29,7 @@ public class DungeonView {
 		Console.print("In front of you is holding a big dungeon. Yes, that's your goal... The dungeon of Girk !!");
 		Console.print("It contains the " + statues + " statues that allow you to accomplish any wish once gathered !");
 		Console.print("But you have to be aware of the many dangers that are waiting for you inside...");
-		Console.print("");
+		System.out.println();
 		
 	}
 

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Collection;
+
 public enum Action {
 
 	NORTH ('N', "to go to the north"),
@@ -13,7 +15,13 @@ public enum Action {
 	TAKE ('T', "to take it"),
 	LEAVE ('L', "to move on and leave it"), 
 	DRINK ('D', "to drink it"),
-	UNLOCK ('U', "to unlock the door");
+	UNLOCK ('U', "to unlock the door"),
+	START ('S', "to start the game"),
+	CREDITS ('C', "to see the credits"),
+	SILENCE ('S', "to set the game in silence mode"),
+	LEVEL ('L', "to select a level"),
+	MAKE ('M', "to make a new level"),
+	NOISY ('N', "to set the game in noisy mode");
 	
 	private char action;
 	private String description;
@@ -125,6 +133,14 @@ public enum Action {
 
 	public static Action getAction (char input) {
         for (Action action : values()) {
+        	if (action.getAction() == input)
+        		return action;
+        }
+        return null;
+    }
+	
+	public static Action getAction (char input, Collection<Action> actions) {
+        for (Action action : actions) {
         	if (action.getAction() == input)
         		return action;
         }
