@@ -1,6 +1,6 @@
 package model;
 
-import java.net.URL;
+import java.io.File;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -120,11 +120,9 @@ public class PlaySound {
 		
 		try {
 
-			URL url = getClass().getResource(filepath);
-			
 			// create AudioInputStream object 
 			audioInputStream = 
-					AudioSystem.getAudioInputStream(url); 
+					AudioSystem.getAudioInputStream(new File(filepath)); 
 			
 			// create clip reference 
 			clip = AudioSystem.getClip();  

@@ -16,9 +16,9 @@ public enum Action {
 	LEAVE ('L', "to move on and leave it"), 
 	DRINK ('D', "to drink it"),
 	UNLOCK ('U', "to unlock the door"),
-	START ('S', "to start the game"),
+	START ('G', "to start the game"),
 	CREDITS ('C', "to see the credits"),
-	SILENCE ('S', "to set the game in silence mode"),
+	SILENCE ('S', "to set the game in silent mode"),
 	LEVEL ('L', "to select a level"),
 	MAKE ('M', "to make a new level"),
 	NOISY ('N', "to set the game in noisy mode");
