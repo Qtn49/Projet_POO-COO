@@ -5,6 +5,10 @@
 *.vpp.*
 *.swp
 
+# ignore all resources
+
+Resources
+
 # ignore all additional tex files
 
 doc/*

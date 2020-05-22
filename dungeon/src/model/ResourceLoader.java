@@ -12,33 +12,52 @@ import com.jcraft.jsch.SftpException;
 public class ResourceLoader {
 
 	private static final String PATHSEPARATOR = "/";
-	public static boolean loaded;
+	private static boolean loaded;
+	private static boolean working;
 	private static ChannelSftp channelSftp;
+	private static JSch jsch = new JSch();
+    private static Session session = null;
 	
+	public static boolean isLoaded() {
+		return loaded;
+	}
+
+	public static void setLoaded(boolean loaded) {
+		ResourceLoader.loaded = loaded;
+	}
+
 	public static void loadResource () {
 		
-		JSch jsch = new JSch();
-        Session session = null;
-        try {
-            session = jsch.getSession("donjon-poo", "ftp.xebot.fr", 22);
-            session.setConfig("StrictHostKeyChecking", "no");
-            session.setPassword("donjon");
-            session.connect();
+		loaded = false;
+		
+		if (!working) {
+		
+			try {
+	        	
+	        	working = true;
+	        	
+	            session = jsch.getSession("donjon-poo", "ftp.xebot.fr", 22);
+	            session.setConfig("StrictHostKeyChecking", "no");
+	            session.setPassword("donjon");
+	            session.connect();
 
-            Channel channel = session.openChannel("sftp");
-            channel.connect();
-            channelSftp = (ChannelSftp) channel;
-            
-            recursiveFolderDownload("Resources", "Resources");
-            loaded = true;
-            System.out.println("Loaded !");
-            
-            channelSftp.exit();
-            session.disconnect();
-            
-        }catch (Exception exception) {
-        	
-        }
+	            Channel channel = session.openChannel("sftp");
+	            channel.connect();
+	            channelSftp = (ChannelSftp) channel;
+	            
+	            recursiveFolderDownload("Resources", "Resources");
+	            setLoaded(true);
+	            
+	            channelSftp.exit();
+	            session.disconnect();
+	            
+	            working = false;
+	            
+	        }catch (Exception exception) {
+	        	
+	        }
+			
+		}
 		
 	}
 	

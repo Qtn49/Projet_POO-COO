@@ -13,7 +13,7 @@ public class Console {
 	 * @param string : the text to print
 	 * @param jumpline : true adds a new line at the end
 	 */
-	public static void print (Object object, boolean jumpline) {
+	public static void print (Object object, boolean jumpline, int time) {
 		
 		String text = object.toString();
 		
@@ -25,7 +25,7 @@ public class Console {
 			System.out.print(text.charAt(i));
 			
 			try {
-				Thread.sleep(TIME);
+				Thread.sleep(time);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -47,7 +47,7 @@ public class Console {
 	 */
 	public static void print (Object object) {
 		
-		print(object, true);
+		print(object, true, TIME);
 		
 	}
 	
@@ -64,7 +64,7 @@ public class Console {
 		
 		char input = ' ';
 		
-		print("=>", false);
+		print("=>", false, TIME);
 		pattern += "]";
 		
 		// check if the token consists of the declared pattern

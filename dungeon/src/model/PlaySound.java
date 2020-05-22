@@ -13,6 +13,7 @@ public class PlaySound {
 	private String status;
 	private AudioInputStream audioInputStream;
 	private String filepath;
+	private boolean ready;
 	
 	/**
 	 * Initiate a sound with no file path
@@ -64,8 +65,6 @@ public class PlaySound {
 	 */
 	public void setFilepath(String filepath) {
 		this.filepath = filepath;
-		if (clip == null)
-			init();
 	}
 
 	/**
@@ -118,6 +117,13 @@ public class PlaySound {
 //		if (filepath == null)
 //			throw new NoFileException();
 		
+		if (silence | !ResourceLoader.isLoaded()) {
+			ready = false;
+			return;
+		}
+		
+		ready = true;
+		
 		try {
 
 			// create AudioInputStream object 
@@ -147,23 +153,19 @@ public class PlaySound {
 	 */
 	public void play(boolean loop) {
 		
+		if (silence | !ResourceLoader.isLoaded())
+			return;
 		
-		if (audioInputStream == null)
-			init();
+		init();
 		
-		if (status.equals("stop"))
-			init();
+		if (!ready)
+			return;
+			
+		if (loop)
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
 		
-		if (!silence) {
+		clip.start();
 			
-			
-			
-			if (loop)
-				clip.loop(Clip.LOOP_CONTINUOUSLY);
-			
-			clip.start();
-				
-		}
 		
 		status = "play";
 	}
@@ -172,6 +174,9 @@ public class PlaySound {
 	 * stop the music and close the file
 	 */
 	public void stop() {
+		if (silence | !ResourceLoader.isLoaded())
+			return;
+		
 		clip.stop();
 		clip.close();
 		status = "stop";

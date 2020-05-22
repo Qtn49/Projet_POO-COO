@@ -1,10 +1,10 @@
 package controller;
 
 import model.Action;
-import model.Dungeon;
 import model.Game;
 import model.Level;
 import model.Menu;
+import model.ResourceLoader;
 import utility.Console;
 import view.MenuView;
 
@@ -12,7 +12,6 @@ public class MenuController {
 
 	private MenuView view;
 	private Menu menu;
-	
 	/**
 	 * @param view
 	 * @param menu
@@ -23,6 +22,20 @@ public class MenuController {
 	} 
 	
 	public void startMenu() {
+		
+		Runnable download = () -> {
+			ResourceLoader.loadResource();
+		};
+		
+		new Thread(download).start();
+	
+		int step = 1;
+		
+		while (!ResourceLoader.isLoaded()) {
+			view.loading(step);
+			step++;
+		}
+		
 		view.menu();
 		for (Action action : menu.getActions()) {
 			view.action(action);
@@ -44,13 +57,15 @@ public class MenuController {
 		
 	}
 	
-	private void selectLevel () {
-		
-	}
+//	private void selectLevel () {
+//		
+//	}
 	
 	private void executeAction(Action action) {
 		switch (action) {
 		case START:
+			if (!ResourceLoader.isLoaded())
+				menu.setSilence(false);
 			menu.setGame(new Game(menu.getDungeon(), menu.isSilence()));
 			menu.getGame().start();
 			break;
