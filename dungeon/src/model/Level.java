@@ -20,9 +20,9 @@ public class Level {
 		Transition t1 = new Transition("You're slowly opening a huuuuuge door and carefully you start seeing the inside... \nThere are bats flying around and someone's roaring", r1, Music.FIRST_DOOR);
 		Transition t2 = new Transition("There's a radio playing in this corridor. Nice music mate. You're sitting a moment to listen to it and appreciate the music", r2, Music.RADIO);
 		Transition t3 = new Transition("You're opening the door carefully...", r3, Music.DOOR_OPEN);
-		Transition t4 = new Transition("You're walking through a corridor and you hear some bird noises. \nOh there they are ! A nest ! \nAmazing !", r4, Music.BIRDS);
+		Transition t4 = new Transition("You're walking through a corridor and you hear some bird noises. \n Oh there they are ! A nest ! \nAmazing !", r4, Music.BIRDS);
 		Transition t5 = new Transition("Nice, there's a fountain here. The sound of it is really relaxing", r6, Music.WATER);
-		Transition t6 = new Transition("You're taking the stairs. Those are big stairs and you have to climb them up for a while... \\nAfter over 100 steps, you finally get to the room.", r5, Music.STEPS);
+		Transition t6 = new Transition("You're taking the stairs. Those are big stairs and you have to climb them up for a while... \nAfter over 100 steps, you finally get to the room.", r5, Music.STEPS);
 		Transition t7 = new Transition("You're moving to the next room...", r6);
 		Transition t8 = new Transition("You're moving to the next room", r7);
 		Transition t9 = new Transition("You're moving to the next room", dungeon.getStart());

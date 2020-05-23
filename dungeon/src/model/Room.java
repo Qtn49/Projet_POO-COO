@@ -1,6 +1,12 @@
 package model;
 import java.util.HashMap;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class Room {
 
 	private String description;
@@ -9,6 +15,11 @@ public class Room {
 	private Music music;
 	private boolean open;
 	private Equipment equipment;
+	
+	public Room() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	/**
 	 * Initiate a room with a default music
 	 * @param description

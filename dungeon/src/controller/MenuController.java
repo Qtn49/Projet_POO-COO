@@ -5,7 +5,7 @@ import model.Game;
 import model.Level;
 import model.Menu;
 import model.ResourceLoader;
-import utility.Console;
+import util.Console;
 import view.MenuView;
 
 public class MenuController {

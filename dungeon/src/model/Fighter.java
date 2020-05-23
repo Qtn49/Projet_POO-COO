@@ -1,6 +1,6 @@
 package model;
 
-import utility.Console;
+import util.Console;
 
 public abstract class Fighter extends Character {
 

@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-import utility.Console;
+import util.Console;
 
 public class Player extends Fighter {
 

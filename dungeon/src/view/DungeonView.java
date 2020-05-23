@@ -7,7 +7,7 @@ import model.Fighter;
 import model.Item;
 import model.Player;
 import model.Room;
-import utility.Console;
+import util.Console;
 
 public class DungeonView {
 

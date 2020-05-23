@@ -12,7 +12,7 @@ import model.PlaySound;
 import model.Player;
 import model.Room;
 import model.Transition;
-import utility.Console;
+import util.Console;
 import view.DungeonView;
 
 public class DungeonController {

@@ -1,13 +1,20 @@
 package model;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
+@XmlSeeAlso(Room.class)
 @XmlRootElement
 public class Dungeon {
 
 	private Room start;
 	private Player player;
 	private final int STATUES_GOAL;
+	
+	public Dungeon() {
+		// TODO Auto-generated constructor stub
+		this(new Room("This is the first room of the dungeon"));
+	}
 	
 	public Dungeon (Room start) {
 		this(start, 4);
