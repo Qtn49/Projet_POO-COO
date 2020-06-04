@@ -58,7 +58,7 @@ public enum Item {
 	}
 	
 	/**
-	 * @return the points
+	 * @return the health points
 	 */
 	public int getPoints() {
 		return points;

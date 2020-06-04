@@ -2,15 +2,26 @@ package model;
 
 public enum Weapon {
 	
-	FIST ("own fist", 5),
-	MAGIC_WAND ("magic wand", 10);
+	FIST ("own fist", 5, 10),
+	MAGIC_WAND ("magic wand", 5, 40),
+	MASSUE ("huge massue", 10, 20), 
+	FIRE ("fire", 15, 30), 
+	AXE ("axe", 20, 5),
+	KNIFE ("knife", 10, 10);
 	
 	private String name;
 	private int damage;
-	
-	private Weapon(String name, int damage) {
+	private int chance;
+
+	/**
+	 * @param name
+	 * @param damage
+	 * @param chance
+	 */
+	private Weapon(String name, int damage, int chance) {
 		this.name = name;
 		this.damage = damage;
+		this.setChance(chance);
 	}
 
 	/**
@@ -41,6 +52,20 @@ public enum Weapon {
 		this.damage = damage;
 	}
 	
+	/**
+	 * @return the chance
+	 */
+	public int getChance() {
+		return chance;
+	}
+
+	/**
+	 * @param chance the chance to set
+	 */
+	public void setChance(int chance) {
+		this.chance = chance;
+	}
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

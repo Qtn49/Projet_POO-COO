@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * an enumeration to list all the contributors of this project (lol)
+ * @author quentin
+ *
+ */
 public enum Contributor {
 
 	RAPH ("Raphaël", "GUEZ", "for the music"),

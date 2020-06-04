@@ -12,10 +12,12 @@ public class Menu {
 	public Menu() {
 		
 		actions = new ArrayList<>();
-		actions.add(Action.LEVEL);
-		actions.add(Action.MAKE);
+		actions.add(Action.START);
+//		actions.add(Action.LEVEL);
+//		actions.add(Action.MAKE);
 		actions.add(Action.SILENCE);
 		actions.add(Action.CREDITS);
+		actions.add(Action.QUIT);
 		
 	}
 	
@@ -70,7 +72,7 @@ public class Menu {
 	 */
 	public void setDungeon(Dungeon dungeon) {
 		this.dungeon = dungeon;
-		actions.add(0, Action.START);
+//		actions.add(0, Action.START);
 	}
 
 	/**

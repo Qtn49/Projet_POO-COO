@@ -1,10 +1,24 @@
 package model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlSeeAlso({Room.class, Music.class})
 public class Transition {
 
+	@XmlElement
 	private String description;
+	@XmlElement
 	private Music music;
+	@XmlElement
 	private Room room;
+	
+	public Transition() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public Transition(String description, Room room) {
 		this(description, room, null);
@@ -15,7 +29,6 @@ public class Transition {
 	 * @param description
 	 * @param room
 	 * @param music
-	 * @param enterMusic
 	 */
 	public Transition(String description, Room room, Music music) {
 		this.description = description;

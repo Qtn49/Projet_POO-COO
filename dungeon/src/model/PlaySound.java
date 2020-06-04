@@ -117,7 +117,7 @@ public class PlaySound {
 //		if (filepath == null)
 //			throw new NoFileException();
 		
-		if (silence | !ResourceLoader.isLoaded()) {
+		if (silence) {
 			ready = false;
 			return;
 		}
@@ -153,7 +153,7 @@ public class PlaySound {
 	 */
 	public void play(boolean loop) {
 		
-		if (silence | !ResourceLoader.isLoaded())
+		if (silence)
 			return;
 		
 		init();
@@ -174,7 +174,8 @@ public class PlaySound {
 	 * stop the music and close the file
 	 */
 	public void stop() {
-		if (silence | !ResourceLoader.isLoaded())
+		
+		if (silence)
 			return;
 		
 		clip.stop();
@@ -183,9 +184,6 @@ public class PlaySound {
 	}
 	
 	public boolean isPlaying() {
-		
-		if (clip == null)
-			return false;
 		
 		return clip.isActive();
 	}

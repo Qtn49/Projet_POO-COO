@@ -1,10 +1,22 @@
 package model;
 
+/**
+ * absctract class that represents all the attributs of a character
+ * @author quentin
+ *
+ */
 public abstract class Character {
 
 	private String name;
 	private Equipment equipment;
 	private Room location;
+	
+	/**
+	 * @param name
+	 */
+	public Character(String name) {
+		this(name, null);
+	}
 
 	/**
 	 * @param name
@@ -44,10 +56,18 @@ public abstract class Character {
 		this.equipment = equipment;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Room getLocation() {
 		return location;
 	}
 
+	/**
+	 * 
+	 * @param location
+	 */
 	public void setLocation(Room location) {
 		this.location = location;
 	}

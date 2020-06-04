@@ -86,4 +86,11 @@ public class MenuView {
 		
 	}
 
+	public void quit() {
+		// TODO Auto-generated method stub
+		
+		Console.print("Well bye, hope you had a good time !");
+		
+	}
+
 }

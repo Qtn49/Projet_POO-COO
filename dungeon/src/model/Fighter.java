@@ -4,47 +4,21 @@ import util.Console;
 
 public abstract class Fighter extends Character {
 
-	private final int MAX_HEALTH;
 	private int health;
-	private int chance;
 	private boolean criticHit;
 	private int damage;
 	
 	/**
 	 * @param name
-	 * @param location
-	 * @param maxHealth
 	 * @param health
+	 * @param chance
+	 * @param damage
 	 */
-	public Fighter(String name, Room location, int maxHealth, Weapon weapon) {
+	public Fighter(String name, Room location, int health, Weapon weapon) {
 		super(name, location);
-		MAX_HEALTH = maxHealth;
-		health = maxHealth;
+		this.health = health;
+		damage = weapon.getDamage();
 		getEquipment().addWeapon(weapon);
-	}
-
-
-
-	public int getDamage() {
-		
-		return damage;
-	}
-	
-	/**
-	 * @param damage the damage to set
-	 */
-	public void setDamage(int damage) {
-		this.damage = damage;
-	}
-
-
-
-	public int getChance() {
-		return chance;
-	}
-
-	public void setChance(int chance) {
-		this.chance = chance;
 	}
 
 	/**
@@ -78,6 +52,20 @@ public abstract class Fighter extends Character {
 	}
 
 	/**
+	 * @return the damage
+	 */
+	public int getDamage() {
+		return damage;
+	}
+
+	/**
+	 * @param damage the damage to set
+	 */
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
+	/**
 	 * @param health the health to set
 	 */
 	public void loseHealth(int points) {
@@ -86,9 +74,6 @@ public abstract class Fighter extends Character {
 	
 	public void earnHealth (int points) {
 		health += points;
-		
-		if (health > MAX_HEALTH)
-			health = MAX_HEALTH;
 	}
 
 	/**
@@ -102,7 +87,7 @@ public abstract class Fighter extends Character {
 		
 		damage = getEquipment().getCurrentWeapon().getDamage();
 		
-		criticHit = Console.getChance(chance);
+		criticHit = Console.getChance(getEquipment().getCurrentWeapon().getChance());
 		
 		damage *= criticHit ? 2 : 1;
 		

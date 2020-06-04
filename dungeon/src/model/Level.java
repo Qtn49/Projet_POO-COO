@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * a class composed of static method to generate a level
+ * @author quentin
+ *
+ */
 public class Level {
 
 	public static Dungeon initLevel1 () {
@@ -30,15 +35,29 @@ public class Level {
 		Transition t11 = new Transition("You're moving to the next room", r9);
 		Transition t12 = new Transition("You're moving to the next room", r10);
 
-		r1.setEnemy(new Wizard("Gandalf"));
-		r1.getEnemy().getEquipment().addItem(Item.KEY);
+		r1.setEnemy(new Enemy("Gandalf", 60, Weapon.MAGIC_WAND));
+		r5.setEnemy(new Enemy("Troll", 40, Weapon.MASSUE));
+		r7.setEnemy(new Enemy("Orc", 50, Weapon.AXE));
+		r10.setEnemy(new Enemy("Dragon", 100, Weapon.FIRE));
 		
-		r3.getEquipment().addItem(Item.STATUE);
-		r5.getEquipment().addItem(Item.STATUE);
+		r6.getEquipment().setCurrentWeapon(Weapon.KNIFE);
+		
+		r3.getEquipment().addItem(Item.POTION);
+		r6.getEquipment().addItem(Item.POTION);
+		r9.getEquipment().addItem(Item.POTION);
+		
+		r1.getEquipment().addItem(Item.KEY);
+		r5.getEquipment().addItem(Item.KEY);
+		r8.getEquipment().addItem(Item.KEY);
+		
+		r2.getEquipment().addItem(Item.STATUE);
+		r4.getEquipment().addItem(Item.STATUE);
 		r7.getEquipment().addItem(Item.STATUE);
 		r10.getEquipment().addItem(Item.STATUE);
 		
-		r2.setOpen(false);
+		r4.setOpen(false);
+		r6.setOpen(false);
+		r10.setOpen(false);
 		
 		dungeon.getStart().setTransition(Direction.EAST, t1);
 		r1.setTransition(Direction.SOUTH, t2, true);

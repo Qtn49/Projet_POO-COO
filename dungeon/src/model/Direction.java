@@ -1,5 +1,14 @@
 package model;
 
+import javax.xml.bind.annotation.XmlEnum;
+
+/**
+ * enumeration that lists all directions (north, east, west, south)
+ * it can give an opposite direction
+ * @author quentin
+ *
+ */
+@XmlEnum
 public enum Direction {
 	
 	NORTH ("north", Action.NORTH),
@@ -61,21 +70,6 @@ public enum Direction {
 		}
 		
 		return opposed;
-	}
-	
-	public static Direction getDirection (Action action) {
-		switch (action) {
-		case NORTH:
-			return NORTH;
-		case WEST:
-			return WEST;
-		case EAST:
-			return EAST;
-		case SOUTH:
-			return SOUTH;
-		default:
-			return null;
-		}
 	}
 	
 }

@@ -8,10 +8,16 @@ import model.ResourceLoader;
 import util.Console;
 import view.MenuView;
 
+/**
+ * A controller class to manage the menu at the start of the game 
+ * @author quentin
+ *
+ */
 public class MenuController {
 
 	private MenuView view;
 	private Menu menu;
+	
 	/**
 	 * @param view
 	 * @param menu
@@ -21,6 +27,9 @@ public class MenuController {
 		this.menu = menu;
 	} 
 	
+	/**
+	 * A method to initiate the menu : it downloads the ressources from the server in a thread and ask the user for an action
+	 */
 	public void startMenu() {
 		
 		Runnable download = () -> {
@@ -43,6 +52,9 @@ public class MenuController {
 		readAction();
 	}
 	
+	/**
+	 * method to read the action that the user has entered and execute it
+	 */
 	private void readAction () {
 		
 		for (Action action : menu.getActions()) {
@@ -57,20 +69,36 @@ public class MenuController {
 		
 	}
 	
-//	private void selectLevel () {
-//		
-//	}
+	/**
+	 * method which was supposed to offer a selection of levels but I didn't manage to store levels in xml files
+	 */
+	private void selectLevel () {
+		
+	}
 	
+	/**
+	 * method which was supposed to let the user create a game and upload it on the server
+	 */
+	private void makeLevel () {
+		
+	}
+	
+	/**
+	 * Method to execute the action from a given action name
+	 * @param action : action name to execute
+	 */
 	private void executeAction(Action action) {
 		switch (action) {
 		case START:
-			if (!ResourceLoader.isLoaded())
-				menu.setSilence(false);
+			menu.setDungeon(Level.initLevel1());
 			menu.setGame(new Game(menu.getDungeon(), menu.isSilence()));
 			menu.getGame().start();
 			break;
 		case LEVEL:
-			menu.setDungeon(Level.initLevel1());
+			selectLevel();
+			break;
+		case MAKE:
+			makeLevel();
 			break;
 		case SILENCE:
 			menu.setSilence(true);
@@ -80,6 +108,9 @@ public class MenuController {
 			break;
 		case CREDITS:
 			view.credits();
+		case QUIT:
+			view.quit();
+			System.exit(0);
 		default:
 			break;
 		}

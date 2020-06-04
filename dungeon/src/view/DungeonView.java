@@ -1,12 +1,16 @@
 package view;
 
+import java.util.ArrayList;
+
 import model.Action;
 import model.Direction;
 import model.Enemy;
+import model.Equipment;
 import model.Fighter;
 import model.Item;
 import model.Player;
 import model.Room;
+import model.Weapon;
 import util.Console;
 
 public class DungeonView {
@@ -94,9 +98,9 @@ public class DungeonView {
 		if (attacker instanceof Player)
 			player = true;
 		
-		if (attacker.isCriticHit()) {
+		if (attacker.getDamage() == attacker.getEquipment().getCurrentWeapon().getDamage() * 2) {
 			if (player)
-				Console.print(attacker.getDamage() > 0 ? "Lucky you ! You give your best shot on this one" : "Ohhh nahhh ! You just missed it !");
+				Console.print(attacker.getDamage() > 0 ? "Lucky you ! You just had your best shot on this one" : "Ohhh nahhh ! You just missed it !");
 			else
 				Console.print("Critic shot from " + attacker.getName());
 		}
@@ -152,9 +156,9 @@ public class DungeonView {
 		
 	}
 
-	public void takeItem(Player player) {
+	public void take() {
 		
-		Console.print("And one more " + player.getEquipment().getLastItem() + " for you !");
+		Console.print("Yessir, you're filling your equipment pretty well");
 		System.out.println();
 		
 	}
@@ -190,6 +194,65 @@ public class DungeonView {
 		
 		Console.print("Hmmm interesting, seems like the enemy just dropped some stuff...");
 		System.out.println();
+	}
+
+	public void chooseWeapon(ArrayList<Weapon> weapons) {
+
+		int i = 1;
+		
+		Console.print("Please choose a weapon from below");
+		
+		for (Weapon weapon : weapons) {
+			
+			Console.print("\t(" + i + ") " + weapon.getName() + " " + weapon.getDamage() + " damages (" + weapon.getChance() + "% chance of doubling)");
+			i++;
+			
+		}
+		
+	}
+
+	public void checkStats(Player player) {
+		
+		Console.print("You're " + player.getName() + " and right now, you have " + player.getHealth() + " life points left.\n");
+		
+		Equipment equipment = player.getEquipment();
+		
+		Console.print("You are armed with ");
+		
+		for (Weapon weapon : equipment.getWeapons()) {
+			
+			Console.print("\t- " + weapon.getName() + " with " + weapon.getDamage() + " damages and " + weapon.getChance() + " % chance of doubling");
+			
+		}
+		
+		Console.print();
+		
+		for (Item item : Item.values()) {
+			
+			if (!equipment.hasItem(item)) {
+				Console.print("You don't have any " + item.getName() + " !");
+				continue;
+			}
+			
+			Console.print("Right now, you have " + equipment.nbItems(item) + " " + item.getName());
+			
+		}
+		
+		System.out.println();
+		
+	}
+
+	public void takeWeapon() {
+
+		Console.print("There's a weapon here !");
+		
+	}
+
+	public void drink(int health) {
+
+		Console.print("Glooooop, you just drank the best red bull ever !! You're feeling wayy better and now have " + health + " health points !");
+		System.out.println();
+		
 	}
 	
 }

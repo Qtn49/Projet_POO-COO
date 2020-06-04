@@ -1,5 +1,8 @@
 package model;
 
+import javax.xml.bind.annotation.XmlEnum;
+
+@XmlEnum
 public enum Music {
 
 	FIRST_DOOR ("Resources/sounds/First door.wav"),

@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map.Entry;
 
@@ -12,9 +13,15 @@ import model.PlaySound;
 import model.Player;
 import model.Room;
 import model.Transition;
+import model.Weapon;
 import util.Console;
 import view.DungeonView;
 
+/**
+ * A controller class to manage all the functionnalities of the game
+ * @author quentin
+ *
+ */
 public class DungeonController {
 
 //	private static final int MAX_ACTION = 4;
@@ -22,10 +29,12 @@ public class DungeonController {
 	private DungeonView view;
 	private PlaySound sound;
 	private Player player;
-	private Action action;
 	private boolean over;
+	private boolean fighting;
+	private boolean unlock;
 
 	/**
+	 * initiate the controller
 	 * @param dungeon
 	 * @param view
 	 */
@@ -35,8 +44,9 @@ public class DungeonController {
 
 	/**
 	 * initiate the controller
-	 * @param game
+	 * @param dungeon
 	 * @param view
+	 * @param silence
 	 */
 	public DungeonController(Dungeon dungeon, DungeonView view, boolean silence) {
 		super();
@@ -60,12 +70,19 @@ public class DungeonController {
 		this.over = over;
 	}
 
+	/**
+	 * method that initiate the game by setting the sound and printing the start view
+	 */
 	public void start() {
+		view.room(player.getLocation());
 		sound.setFilepath(player.getLocation().getMusic().toString());
 		sound.play();
 		view.start(player, dungeon.getSTATUES_GOAL());
 	}
 	
+	/**
+	 * method to play music
+	 */
 	public void playMusic () {
 		String filepath = player.getLocation().getMusic().toString();
 		
@@ -75,6 +92,9 @@ public class DungeonController {
 		
 	}
 	
+	/**
+	 * method that calls the view to describe the current room of the player
+	 */
 	public void describeRoom () {
 		
 		Room room = player.getLocation();
@@ -82,6 +102,9 @@ public class DungeonController {
 		view.room(room);
 	}
 	
+	/**
+	 * method to check if there's an enemy around
+	 */
 	public void checkEnnemy () {
 		
 		Enemy enemy = player.getLocation().getEnemy();
@@ -97,7 +120,25 @@ public class DungeonController {
 		
 	}
 	
+	/**
+	 * method to check if there's some items around and ask the player to do an action on them
+	 */
 	public void checkItems () {
+		
+		Weapon weapon = player.getLocation().getEquipment().getCurrentWeapon();
+		
+		if (weapon != null) {
+			
+			view.takeWeapon();
+			
+			player.addAction(Action.TAKE);
+			
+			player.getEquipment().addWeapon(weapon);
+			player.getLocation().getEquipment().setCurrentWeapon(null);
+			
+			readActions();
+			
+		}
 		
 		Item item = player.getLocation().getEquipment().getLastItem();
 		
@@ -109,10 +150,10 @@ public class DungeonController {
 			
 			player.addAction(item.getAction());
 			
-			readActions();
-			
-			if (item == Item.POTION)
+			if (item == Item.POTION) {
 				player.earnHealth(Item.POTION.getPoints());
+				player.getEquipment().removeItem(item);
+			}
 			
 			item = player.getLocation().getEquipment().getLastItem();
 			
@@ -121,13 +162,23 @@ public class DungeonController {
 				view.goal(dungeon.getSTATUES_GOAL());
 			}
 			
+			readActions();
+			
 		}
 		
 	}
 	
+	/**
+	 * method to check the transitions that the current room offers
+	 */
 	public void checkTransitions () {
 		
 		Room room = player.getLocation();
+		
+		if (room.getTransitions().size() == 0) {
+			over = true;
+			return;
+		}
 		
 		for (Entry<Direction, Transition> transition : room.getTransitions().entrySet()) {
 
@@ -139,6 +190,9 @@ public class DungeonController {
 		
 	}
 	
+	/**
+	 * method to read an action from the user
+	 */
 	public void readActions() {
 		
 		Collection<Action> actions = player.getActions();
@@ -154,16 +208,24 @@ public class DungeonController {
 			
 		}
 		
-		player.resetActions();
-		action = Action.getAction(Console.read());
+		Action action = Action.getAction(Console.read(), player.getActions());
 		
 		System.out.println();
 		
-		executeAction();
+		executeAction(action);
+		
+		if (action == Action.STATS)
+			readActions();
+		
+		player.resetActions();
 		
 	}
 	
-	public void executeAction () {
+	/**
+	 * method that executes a given action 
+	 * @param action : Action 
+	 */
+	public void executeAction (Action action) {
 		
 		switch (action) {
 		case NORTH:
@@ -180,9 +242,11 @@ public class DungeonController {
 			break;
 		case ATTACK:
 			view.attack();
+			player.resetActions();
 			player.addAction(Action.HIT);
-			player.getActions().get(0).setWeapon(player.getEquipment().getCurrentWeapon());
-			player.addAction(Action.POWERFUL_HIT);
+			Action powerfulHit = Action.POWERFUL_HIT;
+			powerfulHit.setWeapon(player.getEquipment().getCurrentWeapon());
+			player.addAction(powerfulHit);
 			fight(true);
 			break;
 		case FLEE:
@@ -194,35 +258,69 @@ public class DungeonController {
 			}
 			break;
 		case TAKE:
-			view.takeItem(player);
+			view.take();
 			break;
 		case POWERFUL_HIT:
 			player.setCriticHit(true);
-			player.resetHit();
 			break;
 		case UNLOCK:
 			player.getEquipment().removeItem(Item.KEY);
 			view.unlock();
+			unlock = true;
 			break;
+		case STATS:
+			view.checkStats(player);
+			break;
+		case DRINK:
+			view.drink(player.getHealth());
 		default:
 			break;
 		}
 		
 	}
 	
+	public void chooseWeapon() {
+		
+		ArrayList<Weapon> weapons = player.getEquipment().getWeapons();
+		
+		view.chooseWeapon(weapons);
+		
+		for (int index = 1; index <= weapons.size(); index++) {
+			
+			Console.addPattern(java.lang.Character.forDigit(index, 10));
+			
+		}
+		
+		player.getEquipment().setCurrentWeapon(weapons.get(Character.getNumericValue(Console.read()) - 1));
+		
+		System.out.println();
+		
+	}
+
+	/**
+	 * Method to move the player in the given direction, checking whether it's opened and playing the music needed
+	 * @param direction : Direction
+	 */
 	public void move (Direction direction) {
 		
 		Transition transition = player.getLocation().getTransitions().get(direction);
 		
 		if (!transition.getRoom().isOpen()) {
 			view.locked();
-			if (player.getEquipment().hasKey()) {
+			if (player.getEquipment().hasItem(Item.KEY)) {
 				view.hasItem(Item.KEY);
+				player.resetActions();
 				player.addAction(Action.UNLOCK);
+				player.addAction(Action.LEAVE);
+				
 				readActions();
-				transition.getRoom().setOpen(true);
+				
+				if (unlock)
+					transition.getRoom().setOpen(true);
+				else
+					return;
 			}else
-				checkTransitions();
+				return;
 		}
 		
 		if (transition.getMusic() != null) {
@@ -242,7 +340,16 @@ public class DungeonController {
 		
 	}
 	
+	/**
+	 * method called recursively to manage the player fight, from a given boolean if it is the player turn 
+	 * @param playerTurn
+	 */
 	public void fight(boolean playerTurn) {
+		
+		if (!fighting) {
+			chooseWeapon();
+			fighting = true;
+		}
 		
 		Enemy enemy = player.getLocation().getEnemy();
 		player.setCriticHit(false);
@@ -254,12 +361,13 @@ public class DungeonController {
 		}
 		
 		if (!player.isAlive() || !player.getLocation().getEnemy().isAlive()) {
+			
+			fighting = false;
+			
 			if (player.isAlive()) {
-				if (enemy.getEquipment().nbItems() > 0) {
-					view.dropped();
-					player.getLocation().getEquipment().stealEquipment(enemy.getEquipment());
-				}
 				view.defeat(player, player.getLocation().getEnemy());
+				view.dropped();
+				player.getLocation().getEquipment().stealEquipment(enemy.getEquipment());
 				player.getLocation().setEnemy(null);
 			}else {
 				view.defeat(player.getLocation().getEnemy(), player);
@@ -281,9 +389,11 @@ public class DungeonController {
 			view.attack(player, enemy);
 			
 		}else {
+			Action action = Action.POWERFUL_HIT;
+			action.setChance(player.getChance());
 			player.addAction(Action.HIT);
-			player.addAction(Action.POWERFUL_HIT);
-			player.getActions().get(1).setChance(player.getChance());
+			player.addAction(action);
+//			player.getActions().get(1).setChance(player.getChance());
 			
 			enemy.attack(player);
 			
@@ -294,6 +404,9 @@ public class DungeonController {
 		
 	}
 	
+	/**
+	 * method called recursively until the game is over to play each action needed
+	 */
 	public void updateView() {
 		describeRoom();
 		checkEnnemy();

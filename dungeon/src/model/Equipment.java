@@ -2,6 +2,11 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * a class that contains items and weapons
+ * @author quentin
+ *
+ */
 public class Equipment {
 
 	private ArrayList<Weapon> weapons;
@@ -47,8 +52,8 @@ public class Equipment {
 		
 	}
 	
-	public boolean hasStatue () {
-		return nbItems(Item.STATUE) > 0;
+	public boolean hasItem (Item item) {
+		return nbItems(item) > 0;
 	}
 	
 	public Item removeStatue () {
@@ -90,10 +95,6 @@ public class Equipment {
 		return n;
 	}
 	
-	public boolean hasKey () {
-		return nbItems(Item.KEY) > 0;
-	}
-	
 	public Item getLastItem () {
 		
 		if (items.size() > 0)
@@ -115,6 +116,8 @@ public class Equipment {
 		
 		items.addAll(equipment.items);
 		equipment.items.clear();
+		currentWeapon = equipment.currentWeapon;
+		equipment.weapons.clear();
 		
 	}
 	

@@ -2,6 +2,15 @@ package model;
 
 import java.util.Collection;
 
+import javax.xml.bind.annotation.XmlEnum;
+
+/**
+ * enumeration to list all the actions used / planned to use in the game
+ * It has a description and can have some optionnal features
+ * @author quentin
+ *
+ */
+@XmlEnum
 public enum Action {
 
 	NORTH ('N', "to go to the north"),
@@ -21,7 +30,9 @@ public enum Action {
 	SILENCE ('S', "to set the game in silent mode"),
 	LEVEL ('L', "to select a level"),
 	MAKE ('M', "to make a new level"),
-	NOISY ('N', "to set the game in noisy mode");
+	NOISY ('N', "to set the game in noisy mode"),
+	STATS ('C', "to check your stats"),
+	QUIT ('Q', "to quit");
 	
 	private char action;
 	private String description;
@@ -123,14 +134,27 @@ public enum Action {
 		this.chance = chance;
 	}
 	
+	/**
+	 * 
+	 * @return {@link Weapon}
+	 */
 	public Weapon getWeapon() {
 		return weapon;
 	}
 
+	/**
+	 * 
+	 * @param weapon
+	 */
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
 	}
 
+	/**
+	 * 
+	 * @param input
+	 * @return {@link Action}
+	 */
 	public static Action getAction (char input) {
         for (Action action : values()) {
         	if (action.getAction() == input)
@@ -139,6 +163,12 @@ public enum Action {
         return null;
     }
 	
+	/**
+	 * 
+	 * @param input
+	 * @param actions
+	 * @return {@link Action}
+	 */
 	public static Action getAction (char input, Collection<Action> actions) {
         for (Action action : actions) {
         	if (action.getAction() == input)

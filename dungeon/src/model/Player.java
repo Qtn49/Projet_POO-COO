@@ -2,17 +2,32 @@ package model;
 
 import java.util.ArrayList;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import util.Console;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class Player extends Fighter {
 
+	@XmlElement
 	private int nbHit = 1;
+	@XmlElement
 	private boolean missed;
-	
+	@XmlElement
 	private ArrayList<Action> actions;
+	
+	public Player() {
+		// TODO Auto-generated constructor stub
+		this(null);
+	}
+	
 	public Player(Room location) {
 	
-		this("Thorn", location);	
+		this("Thorn", location);
 	}
 	
 	/**
@@ -32,6 +47,7 @@ public class Player extends Fighter {
 	public Player(String name, Room location, int maxHealth, Weapon weapon) {
 		super(name, location, maxHealth, weapon);
 		actions = new ArrayList<Action>();
+		actions.add(Action.STATS);
 	}
 
 
@@ -73,13 +89,13 @@ public class Player extends Fighter {
 	
 	public void resetActions () {
 		actions.clear();
+		actions.add(Action.STATS);
 	}
 	
-	@Override
 	public int getChance() {
 		int chance = (nbHit * 10) % 100;
 		
-		if (chance == 0)
+		if (chance == 0 || chance > 100)
 			chance = 100;
 		
 		return chance;
@@ -90,13 +106,17 @@ public class Player extends Fighter {
 		
 		if (isCriticHit() && Console.getChance(getChance())) {
 			missed = false;
-			setCriticHit(true);
 			setDamage(getEquipment().getCurrentWeapon().getDamage() * 2);
-		}else if (isCriticHit())
+		}else if (isCriticHit()) {
 			setDamage(0);
-		else {
+		}else {
 			nbHit++;
 			setDamage(getEquipment().getCurrentWeapon().getDamage());
+		}
+		
+		if (isCriticHit()) {
+			setCriticHit(true);
+			resetHit();
 		}
 		
 		fighter.loseHealth(getDamage());

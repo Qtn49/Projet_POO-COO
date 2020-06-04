@@ -1,23 +1,39 @@
 package model;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.*;
 
-@XmlSeeAlso(Room.class)
+/**
+ * class that holds the first room, the number of statues to get and the player
+ * @author quentin
+ *
+ */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlSeeAlso({Player.class, Room.class})
 public class Dungeon {
 
+	private static final int DEFAULT_STATUES = 4;
+	@XmlElement(name = "start")
 	private Room start;
+	@XmlElement
 	private Player player;
+	@XmlElement
 	private final int STATUES_GOAL;
 	
+	/**
+	 * empty constructor that was initially made to make mapping possible
+	 */
 	public Dungeon() {
 		// TODO Auto-generated constructor stub
 		this(new Room("This is the first room of the dungeon"));
 	}
 	
+	/**
+	 * 
+	 * @param start
+	 */
 	public Dungeon (Room start) {
-		this(start, 4);
+		this(start, DEFAULT_STATUES);
 	}
 	
 	/**
