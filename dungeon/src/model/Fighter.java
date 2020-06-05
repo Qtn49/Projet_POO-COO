@@ -2,6 +2,11 @@ package model;
 
 import util.Console;
 
+/**
+ * an abstract class to describe a fighter behavior
+ * @author quentin
+ *
+ */
 public abstract class Fighter extends Character {
 
 	private int health;
@@ -83,6 +88,11 @@ public abstract class Fighter extends Character {
 		return health > 0;
 	}
 	
+	/**
+	 * the attck method
+	 * check if there's a doubling attack
+	 * @param fighter
+	 */
 	public void attack(Fighter fighter) {
 		
 		damage = getEquipment().getCurrentWeapon().getDamage();

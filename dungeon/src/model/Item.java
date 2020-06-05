@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * enumeration used to list all of the items hosted in a game
+ * @author quentin
+ *
+ */
 public enum Item {
 
 	STATUE ("statue of the youth", Action.TAKE),

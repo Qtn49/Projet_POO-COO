@@ -64,7 +64,7 @@ public class DungeonController {
 	}
 
 	/**
-	 * @param over the over to set
+	 * @param over : the over to set
 	 */
 	public void setOver(boolean over) {
 		this.over = over;
@@ -78,6 +78,7 @@ public class DungeonController {
 		sound.setFilepath(player.getLocation().getMusic().toString());
 		sound.play();
 		view.start(player, dungeon.getSTATUES_GOAL());
+		updateView();
 	}
 	
 	/**
@@ -250,7 +251,7 @@ public class DungeonController {
 			fight(true);
 			break;
 		case FLEE:
-			if (Console.getChance(10)) {
+			if (Console.getChance(100)) {
 				view.successFlee();
 			}else {
 				view.failFlee();
@@ -279,6 +280,9 @@ public class DungeonController {
 		
 	}
 	
+	/**
+	 * method that list all weapons and ask the user to choose one
+	 */
 	public void chooseWeapon() {
 		
 		ArrayList<Weapon> weapons = player.getEquipment().getWeapons();
@@ -413,8 +417,6 @@ public class DungeonController {
 		if (over)
 			return;
 		checkItems();
-		if (over)
-			return;
 		checkTransitions();
 		updateView();
 	}

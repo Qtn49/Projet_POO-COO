@@ -2,6 +2,11 @@ package model;
 
 import javax.xml.bind.annotation.XmlEnum;
 
+/**
+ * enumeration that contains all the musics of the game and their path to it
+ * @author quentin
+ *
+ */
 @XmlEnum
 public enum Music {
 

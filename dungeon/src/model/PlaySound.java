@@ -6,6 +6,11 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
+/**
+ * a class used to play a music
+ * @author quentin
+ *
+ */
 public class PlaySound {
 
 	private Clip clip;
@@ -183,6 +188,10 @@ public class PlaySound {
 		status = "stop";
 	}
 	
+	/**
+	 * 
+	 * @return whether a music is currently playing or not
+	 */
 	public boolean isPlaying() {
 		
 		return clip.isActive();

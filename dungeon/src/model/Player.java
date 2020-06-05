@@ -9,6 +9,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import util.Console;
 
+/**
+ * class player which is inherited from fighter
+ * this is the main character of the game
+ * and the one that the user controls
+ * @author quentin
+ *
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Player extends Fighter {
@@ -70,28 +77,31 @@ public class Player extends Fighter {
 	}
 
 	/**
-	 * @param missed the missed to set
+	 * @param missed : the missed to set
 	 */
 	public void setMissed(boolean missed) {
 		this.missed = missed;
 	}
 
 	/**
-	 * @param actions the actions to set
+	 * @param action : the action to add
 	 */
 	public void addAction (Action action) {
 		actions.add(action);
 	}
 	
-	public void takeStatue () {
-		getEquipment().addItem(getLocation().getEquipment().removeStatue());
-	}
-	
+	/**
+	 * reset the actions he has
+	 */
 	public void resetActions () {
 		actions.clear();
 		actions.add(Action.STATS);
 	}
 	
+	/**
+	 * 
+	 * @return chance
+	 */
 	public int getChance() {
 		int chance = (nbHit * 10) % 100;
 		
@@ -101,6 +111,10 @@ public class Player extends Fighter {
 		return chance;
 	}
 	
+	/**
+	 * The player has a specific attack method
+	 * because his chance increases if he doesn't use his powerfull hit
+	 */
 	@Override
 	public void attack(Fighter fighter) {
 		
@@ -123,6 +137,9 @@ public class Player extends Fighter {
 		
 	}
 	
+	/**
+	 * reset his hit
+	 */
 	public void resetHit() {
 		nbHit = 1;
 	}
@@ -146,6 +163,10 @@ public class Player extends Fighter {
 		
 	}
 
+	/**
+	 * take an item from his current room
+	 * @param item
+	 */
 	public void takeItem(Item item) {
 
 		getEquipment().addItem(getLocation().getEquipment().removeItem(item));

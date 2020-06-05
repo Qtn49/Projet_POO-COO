@@ -27,10 +27,10 @@ public enum Action {
 	UNLOCK ('U', "to unlock the door"),
 	START ('G', "to start the game"),
 	CREDITS ('C', "to see the credits"),
-	SILENCE ('S', "to set the game in silent mode"),
+	SILENCE ('N', "to play the game with no sound"),
 	LEVEL ('L', "to select a level"),
 	MAKE ('M', "to make a new level"),
-	NOISY ('N', "to set the game in noisy mode"),
+	NOISY ('S', "to play the game with sound on"),
 	STATS ('C', "to check your stats"),
 	QUIT ('Q', "to quit");
 	

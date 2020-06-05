@@ -2,9 +2,15 @@ package util;
 
 import java.util.Scanner;
 
+/**
+ * a useful class with some cool features in it
+ * 
+ * @author quentin
+ *
+ */
 public class Console {
 
-	private static final int TIME = 50;
+	private static final int TIME = 0;
 	private static Scanner scan = new Scanner(System.in);
 	private static String pattern = "(?i)[";
 
@@ -82,13 +88,22 @@ public class Console {
 		return input;
 		
 	}
-	
+
+	/**
+	 * adds a pattern for the read method
+	 * @param input
+	 */
 	public static void addPattern (char input) {
 		
 		pattern += input;
 		
 	}
-	
+
+	/**
+	 * a method that simulates the chance for a given percentage
+	 * @param percent
+	 * @return boolean
+	 */
 	public static boolean getChance (int percent) {
 		
 		return ((int) (Math.random() * 100 + 1)) <= percent;

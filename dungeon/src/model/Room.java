@@ -7,6 +7,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+/**
+ * a class that represents a room
+ * @author quentin
+ *
+ */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlSeeAlso({Transition.class, Equipment.class, Enemy.class})
@@ -125,6 +130,10 @@ public class Room {
 		this.equipment = equipment;
 	}
 
+	/**
+	 * 
+	 * @return transitions
+	 */
 	public HashMap<Direction, Transition> getTransitions() {
 		return transitions;
 	}

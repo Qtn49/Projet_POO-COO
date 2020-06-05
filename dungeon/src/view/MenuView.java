@@ -4,8 +4,17 @@ import model.Action;
 import model.Contributor;
 import util.Console;
 
+/**
+ * class that display the menu
+ * @author quentin
+ *
+ */
 public class MenuView {
 
+	/**
+	 * generates some text during the downloading
+	 * @param step
+	 */
 	public void loading (int step) {
 		switch (step) {
 		case 1:
@@ -59,19 +68,29 @@ public class MenuView {
 		}
 	}
 	
+	/**
+	 * welcome message
+	 */
 	public void menu() {
 		
 		Console.print("Welcome to the infernal dungeon !");
 		Console.print("Here's the menu, choose an action from below");
 		
 	}
-	
+
+	/**
+	 * describe action to be used
+	 * @param action
+	 */
 	public void action(Action action) {
 		
 		Console.print("\t(" + action.getAction() + ") - " + action.getDescription());
 		
 	}
 
+	/**
+	 * describe the credits
+	 */
 	public void credits() {
 		
 		Console.print("Thanks to :");
@@ -86,6 +105,9 @@ public class MenuView {
 		
 	}
 
+	/**
+	 * quit
+	 */
 	public void quit() {
 		// TODO Auto-generated method stub
 		

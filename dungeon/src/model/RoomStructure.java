@@ -7,6 +7,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+/**
+ * deprecated
+ * was originally planned to be used to help mapping a level into an xml file
+ * @author quentin
+ *
+ */
 @XmlRootElement
 @XmlSeeAlso({Room.class})
 @XmlAccessorType(XmlAccessType.FIELD)

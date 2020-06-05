@@ -1,4 +1,10 @@
 package model;
+
+/**
+ * class not used but was supposed to
+ * @author quentin
+ *
+ */
 public class Prisonner extends Character {
 
 	private boolean free;

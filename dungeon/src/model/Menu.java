@@ -2,12 +2,15 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * A class that contains the menu specifications
+ * @author quentin
+ *
+ */
 public class Menu {
 
-	private Game game;
 	private boolean silence;
 	private ArrayList<Action> actions;
-	private Dungeon dungeon;
 	
 	public Menu() {
 		
@@ -21,24 +24,6 @@ public class Menu {
 		
 	}
 	
-	public void startGame () {
-		game = new Game(dungeon, silence);
-	}
-
-	/**
-	 * @return the game
-	 */
-	public Game getGame() {
-		return game;
-	}
-
-	/**
-	 * @param game the game to set
-	 */
-	public void setGame(Game game) {
-		this.game = game;
-	}
-
 	/**
 	 * @return the silencew
 	 */
@@ -58,21 +43,6 @@ public class Menu {
 		
 		this.silence = silence;
 		
-	}
-
-	/**
-	 * @return the dungeon
-	 */
-	public Dungeon getDungeon() {
-		return dungeon;
-	}
-
-	/**
-	 * @param dungeon the dungeon to set
-	 */
-	public void setDungeon(Dungeon dungeon) {
-		this.dungeon = dungeon;
-//		actions.add(0, Action.START);
 	}
 
 	/**

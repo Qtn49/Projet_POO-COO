@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * an enumeration of all available weapons
+ * @author quentin
+ *
+ */
 public enum Weapon {
 	
 	FIST ("own fist", 5, 10),

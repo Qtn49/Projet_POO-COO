@@ -1,11 +1,10 @@
 package controller;
 
 import model.Action;
-import model.Game;
 import model.Level;
 import model.Menu;
-import model.ResourceLoader;
 import util.Console;
+import view.DungeonView;
 import view.MenuView;
 
 /**
@@ -32,18 +31,18 @@ public class MenuController {
 	 */
 	public void startMenu() {
 		
-		Runnable download = () -> {
-			ResourceLoader.loadResource();
-		};
-		
-		new Thread(download).start();
-	
-		int step = 1;
-		
-		while (!ResourceLoader.isLoaded()) {
-			view.loading(step);
-			step++;
-		}
+//		Runnable download = () -> {
+//			ResourceLoader.loadResource();
+//		};
+//		
+//		new Thread(download).start();
+//	
+//		int step = 1;
+//		
+//		while (!ResourceLoader.isLoaded()) {
+//			view.loading(step);
+//			step++;
+//		}
 		
 		view.menu();
 		for (Action action : menu.getActions()) {
@@ -90,9 +89,8 @@ public class MenuController {
 	private void executeAction(Action action) {
 		switch (action) {
 		case START:
-			menu.setDungeon(Level.initLevel1());
-			menu.setGame(new Game(menu.getDungeon(), menu.isSilence()));
-			menu.getGame().start();
+			DungeonController controller = new DungeonController(Level.initLevel1(), new DungeonView(), menu.isSilence());
+			controller.start();
 			break;
 		case LEVEL:
 			selectLevel();

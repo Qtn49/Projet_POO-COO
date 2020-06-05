@@ -1,0 +1,15 @@
+\contentsline {part}{I\hspace {1em}Game description}{3}{part.2}%
+\contentsline {section}{\numberline {A}Explanation of the game}{3}{section.3}%
+\contentsline {section}{\numberline {B}List of the functionnalities}{3}{section.4}%
+\contentsline {part}{II\hspace {1em}Code documentation}{5}{part.5}%
+\contentsline {section}{\numberline {A}The folders tree / the architecture}{5}{section.6}%
+\contentsline {section}{\numberline {B}The scenario}{6}{section.8}%
+\contentsline {section}{\numberline {C}The loading of the resources}{7}{section.11}%
+\contentsline {section}{\numberline {D}The menu}{9}{section.13}%
+\contentsline {section}{\numberline {E}The main classes}{9}{section.14}%
+\contentsline {section}{\numberline {F}The player's movement}{9}{section.15}%
+\contentsline {section}{\numberline {G}The player's actions}{9}{section.16}%
+\contentsline {section}{\numberline {H}The fight}{9}{section.17}%
+\contentsline {part}{III\hspace {1em}My mistakes}{9}{part.18}%
+\contentsline {part}{IV\hspace {1em}Bonus}{9}{part.19}%
+\contentsline {part}{V\hspace {1em}Conclusion}{9}{part.20}%

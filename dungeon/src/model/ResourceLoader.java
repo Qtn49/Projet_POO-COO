@@ -9,6 +9,11 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 
+/**
+ * a class with static methods to load all the ressources from the server
+ * @author quentin
+ *
+ */
 public class ResourceLoader {
 
 	private static final String PATHSEPARATOR = "/";
@@ -26,6 +31,9 @@ public class ResourceLoader {
 		ResourceLoader.loaded = loaded;
 	}
 
+	/**
+	 * load the resources only if it's not already doing it
+	 */
 	public static void loadResource () {
 		
 		loaded = false;
@@ -63,7 +71,7 @@ public class ResourceLoader {
 	
 	/**
      * This method is called recursively to download the folder content from SFTP server
-     * 
+     * it's checking whether the tree is already existing in the local computer
      * @param sourcePath
      * @param destinationPath
      * @throws SftpException

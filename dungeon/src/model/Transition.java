@@ -5,6 +5,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+/**
+ * a class that represents a transition element
+ * @author quentin
+ *
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlSeeAlso({Room.class, Music.class})
 public class Transition {

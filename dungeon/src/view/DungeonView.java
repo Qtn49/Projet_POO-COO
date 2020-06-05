@@ -13,6 +13,12 @@ import model.Room;
 import model.Weapon;
 import util.Console;
 
+/**
+ * the view class of the dungeon
+ * 
+ * @author quentin
+ *
+ */
 public class DungeonView {
 
 	
@@ -37,6 +43,10 @@ public class DungeonView {
 		
 	}
 
+	/**
+	 * describe a room
+	 * @param room
+	 */
 	public void room(Room room) {
 		
 		Console.print(room.toString());
@@ -44,12 +54,21 @@ public class DungeonView {
 		
 	}
 
+	/**
+	 * ask for an action
+	 * @param action
+	 */
 	public void action(Action action) {
 
 		Console.print("\t(" + action + ") " + action.getDescription());
 		
 	}
 
+	/**
+	 * describes a movement through a transition
+	 * @param room
+	 * @param direction
+	 */
 	public void move(Room room, Direction direction) {
 		
 		Console.print(room.getTransitions().get(direction).toString());
@@ -57,12 +76,20 @@ public class DungeonView {
 		
 	}
 
+	/**
+	 * describe a direction
+	 * @param direction
+	 */
 	public void transition(Direction direction) {
 		
 		Console.print("There is a door to the " + direction);
 		
 	}
 
+	/**
+	 * warn an enemy presence
+	 * @param ennemy
+	 */
 	public void enemy(Enemy ennemy) {
 		
 		Console.print("Hummm, seems like there is an ennemy...");
@@ -70,27 +97,47 @@ public class DungeonView {
 		
 	}
 
+	/**
+	 * describe the possession of a statue
+	 * @param player
+	 */
 	public void takeStatue (Player player) {
 	
 		switch (player.getEquipment().nbItems(Item.STATUE)) {
 			case 1:
 				Console.print("Well done ! You just found your first " + Item.STATUE);
 				break;
+			case 2:
+				Console.print("Half of it now !");
+				break;
+			case 3:
+				Console.print("Hold on ! There's only one left");
+				break;
 			default:
-				Console.print("And one more statue for " + player.getName());
+				Console.print("Great job " + player.getName());
 				break;
 		}
 
 		System.out.println();
 		
 	}
-	
+
+	/**
+	 * list the health of the player and his enemy
+	 * @param player
+	 * @param enemy
+	 */
 	public void health(Player player, Enemy enemy) {
 		
 		Console.print("You have " + player.getHealth() + " health points and " + enemy.getName() + " has " + enemy.getHealth() + " health points");
 		
 	}
 
+	/**
+	 * describe the progress of an attack
+	 * @param attacker
+	 * @param defender
+	 */
 	public void attack(Fighter attacker, Fighter defender) {
 
 		boolean player = false;
@@ -100,18 +147,23 @@ public class DungeonView {
 		
 		if (attacker.getDamage() == attacker.getEquipment().getCurrentWeapon().getDamage() * 2) {
 			if (player)
-				Console.print(attacker.getDamage() > 0 ? "Lucky you ! You just had your best shot on this one" : "Ohhh nahhh ! You just missed it !");
+				Console.print("Lucky you ! You just had your best shot on this one");
 			else
 				Console.print("Critic shot from " + attacker.getName());
-		}
-		
-		if (attacker.getDamage() > 0)
+		}else if (attacker.getDamage() > 0)
 			Console.print((player ? "You give " + defender.getName() : attacker.getName() + " gives you") +  " a " + attacker.getDamage() + " points attack");
+		else
+			Console.print("Ohhh nahhh ! You just missed it !");
 		
 		System.out.println();
 		
 	}
 	
+	/**
+	 * describe the defeat of a fighter
+	 * @param winner
+	 * @param loser
+	 */
 	public void defeat (Fighter winner, Fighter loser) {
 		
 		if (winner instanceof Player)
@@ -123,12 +175,9 @@ public class DungeonView {
 		
 	}
 
-	public void statue() {
-		
-		Console.print("Oh ! There's a statue here !");
-		
-	}
-
+	/**
+	 * describe the start of an attack
+	 */
 	public void attack() {
 
 		Console.print("You decide to attack and manage to attack him first");
@@ -136,6 +185,9 @@ public class DungeonView {
 		
 	}
 
+	/**
+	 * describe a successful flee
+	 */
 	public void successFlee() {
 		
 		Console.print("You successfully escaped ! The ennemy is now gone !");
@@ -143,6 +195,9 @@ public class DungeonView {
 		
 	}
 
+	/**
+	 * describe an unsuccessful flee
+	 */
 	public void failFlee() {
 		
 		Console.print("Oh noooo... You couldn't escaped and the enemy found you back !");
@@ -150,12 +205,19 @@ public class DungeonView {
 		
 	}
 
+	/**
+	 * describe the presence of an item
+	 * @param item
+	 */
 	public void item(Item item) {
 		
 		Console.print("Well ! You just found a " + item + " !");
 		
 	}
 
+	/**
+	 * taking an item
+	 */
 	public void take() {
 		
 		Console.print("Yessir, you're filling your equipment pretty well");
@@ -163,6 +225,9 @@ public class DungeonView {
 		
 	}
 	
+	/**
+	 * describe when the door is locked
+	 */
 	public void locked () {
 		
 		Console.print("Huh ! Seems like this door is locked... You might need a key for that one");
@@ -170,6 +235,10 @@ public class DungeonView {
 		
 	}
 
+	/**
+	 * describe the end
+	 * @param statues_GOAL
+	 */
 	public void goal(int statues_GOAL) {
 
 		Console.print("Well done dude ! You just found all of the " + statues_GOAL + Item.STATUE);
@@ -177,6 +246,9 @@ public class DungeonView {
 
 	}
 
+	/**
+	 * describe the opening of the door
+	 */
 	public void unlock() {
 
 		Console.print("Yess the door is now unlocked ! But unfortunately, your key has lost its power... \nYou can't use it anymore...");
@@ -184,18 +256,29 @@ public class DungeonView {
 		
 	}
 
+	/**
+	 * warn the player of the item he possesses
+	 * @param item
+	 */
 	public void hasItem(Item item) {
 		
 		Console.print("Well nice ! It seems like you got a " + item);
 		
 	}
 
+	/**
+	 * warn the presence of new items
+	 */
 	public void dropped() {
 		
 		Console.print("Hmmm interesting, seems like the enemy just dropped some stuff...");
 		System.out.println();
 	}
 
+	/**
+	 * list all weapons and ask to choose one
+	 * @param weapons
+	 */
 	public void chooseWeapon(ArrayList<Weapon> weapons) {
 
 		int i = 1;
@@ -211,6 +294,10 @@ public class DungeonView {
 		
 	}
 
+	/**
+	 * describe all stats of player
+	 * @param player
+	 */
 	public void checkStats(Player player) {
 		
 		Console.print("You're " + player.getName() + " and right now, you have " + player.getHealth() + " life points left.\n");
@@ -242,12 +329,19 @@ public class DungeonView {
 		
 	}
 
+	/**
+	 * taking a weapon
+	 */
 	public void takeWeapon() {
 
 		Console.print("There's a weapon here !");
 		
 	}
 
+	/**
+	 * drinking
+	 * @param health
+	 */
 	public void drink(int health) {
 
 		Console.print("Glooooop, you just drank the best red bull ever !! You're feeling wayy better and now have " + health + " health points !");
