@@ -74,7 +74,6 @@ public class DungeonController {
 	 * method that initiate the game by setting the sound and printing the start view
 	 */
 	public void start() {
-		view.room(player.getLocation());
 		sound.setFilepath(player.getLocation().getMusic().toString());
 		sound.play();
 		view.start(player, dungeon.getSTATUES_GOAL());
@@ -242,12 +241,6 @@ public class DungeonController {
 			move(Direction.WEST);
 			break;
 		case ATTACK:
-			view.attack();
-			player.resetActions();
-			player.addAction(Action.HIT);
-			Action powerfulHit = Action.POWERFUL_HIT;
-			powerfulHit.setWeapon(player.getEquipment().getCurrentWeapon());
-			player.addAction(powerfulHit);
 			fight(true);
 			break;
 		case FLEE:
@@ -353,6 +346,14 @@ public class DungeonController {
 		if (!fighting) {
 			chooseWeapon();
 			fighting = true;
+			view.attack();
+			player.resetActions();
+			Action powerfulHit = Action.POWERFUL_HIT, hit = Action.HIT;
+			powerfulHit.setWeapon(player.getEquipment().getCurrentWeapon());
+			powerfulHit.setChance(player.getEquipment().getCurrentWeapon().getChance());
+			hit.setWeapon(player.getEquipment().getCurrentWeapon());
+			player.addAction(Action.HIT);
+			player.addAction(powerfulHit);
 		}
 		
 		Enemy enemy = player.getLocation().getEnemy();
@@ -373,6 +374,7 @@ public class DungeonController {
 				view.dropped();
 				player.getLocation().getEquipment().stealEquipment(enemy.getEquipment());
 				player.getLocation().setEnemy(null);
+				player.resetHit();
 			}else {
 				view.defeat(player.getLocation().getEnemy(), player);
 				over = true;
@@ -393,11 +395,12 @@ public class DungeonController {
 			view.attack(player, enemy);
 			
 		}else {
-			Action action = Action.POWERFUL_HIT;
-			action.setChance(player.getChance());
-			player.addAction(Action.HIT);
-			player.addAction(action);
-//			player.getActions().get(1).setChance(player.getChance());
+			Action powerfullHit = Action.POWERFUL_HIT, hit = Action.HIT;
+			powerfullHit.setWeapon(player.getEquipment().getCurrentWeapon());
+			powerfullHit.setChance(player.getChance());
+			hit.setWeapon(player.getEquipment().getCurrentWeapon());
+			player.addAction(hit);
+			player.addAction(powerfullHit);
 			
 			enemy.attack(player);
 			
@@ -417,6 +420,11 @@ public class DungeonController {
 		if (over)
 			return;
 		checkItems();
+		if (over) {
+			sound.stop();
+			view.win();
+			return;
+		}
 		checkTransitions();
 		updateView();
 	}

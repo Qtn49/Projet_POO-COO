@@ -21,7 +21,7 @@ import util.Console;
 public class Player extends Fighter {
 
 	@XmlElement
-	private int nbHit = 1;
+	private int nbHit = 0;
 	@XmlElement
 	private boolean missed;
 	@XmlElement
@@ -103,9 +103,9 @@ public class Player extends Fighter {
 	 * @return chance
 	 */
 	public int getChance() {
-		int chance = (nbHit * 10) % 100;
+		int chance = (nbHit * 10 + getEquipment().getCurrentWeapon().getChance()) % 100;
 		
-		if (chance == 0 || chance > 100)
+		if (chance == 0)
 			chance = 100;
 		
 		return chance;
@@ -129,7 +129,7 @@ public class Player extends Fighter {
 		}
 		
 		if (isCriticHit()) {
-			setCriticHit(true);
+			setCriticHit(false);
 			resetHit();
 		}
 		
@@ -141,7 +141,7 @@ public class Player extends Fighter {
 	 * reset his hit
 	 */
 	public void resetHit() {
-		nbHit = 1;
+		nbHit = 0;
 	}
 
 	/**

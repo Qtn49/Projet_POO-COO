@@ -3,6 +3,9 @@ package controller;
 import model.Action;
 import model.Level;
 import model.Menu;
+import model.Music;
+import model.PlaySound;
+import model.ResourceLoader;
 import util.Console;
 import view.DungeonView;
 import view.MenuView;
@@ -16,6 +19,7 @@ public class MenuController {
 
 	private MenuView view;
 	private Menu menu;
+	private PlaySound sound;
 	
 	/**
 	 * @param view
@@ -24,6 +28,7 @@ public class MenuController {
 	public MenuController(MenuView view, Menu menu) {
 		this.view = view;
 		this.menu = menu;
+		sound = new PlaySound(Music.MENU.toString());
 	} 
 	
 	/**
@@ -31,18 +36,20 @@ public class MenuController {
 	 */
 	public void startMenu() {
 		
-//		Runnable download = () -> {
-//			ResourceLoader.loadResource();
-//		};
-//		
-//		new Thread(download).start();
-//	
-//		int step = 1;
-//		
-//		while (!ResourceLoader.isLoaded()) {
-//			view.loading(step);
-//			step++;
-//		}
+		Runnable download = () -> {
+			ResourceLoader.loadResource();
+		};
+		
+		new Thread(download).start();
+	
+		int step = 1;
+		
+		while (!ResourceLoader.isLoaded()) {
+			view.loading(step);
+			step++;
+		}
+		
+		sound.play();
 		
 		view.menu();
 		for (Action action : menu.getActions()) {
@@ -89,6 +96,7 @@ public class MenuController {
 	private void executeAction(Action action) {
 		switch (action) {
 		case START:
+			sound.stop();
 			DungeonController controller = new DungeonController(Level.initLevel1(), new DungeonView(), menu.isSilence());
 			controller.start();
 			break;
@@ -100,15 +108,19 @@ public class MenuController {
 			break;
 		case SILENCE:
 			menu.setSilence(true);
+			sound.setSilence(true);
 			break;
 		case NOISY:
 			menu.setSilence(false);
+			sound.setSilence(false);
 			break;
 		case CREDITS:
 			view.credits();
+			break;
 		case QUIT:
 			view.quit();
 			System.exit(0);
+			break;
 		default:
 			break;
 		}

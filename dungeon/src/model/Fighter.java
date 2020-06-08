@@ -108,7 +108,7 @@ public abstract class Fighter extends Character {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return getName() + " with his " + getEquipment().getCurrentWeapon();
+		return getName() + " with their " + getEquipment().getCurrentWeapon();
 	}
 	
 }

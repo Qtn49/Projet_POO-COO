@@ -9,7 +9,7 @@ public enum Item {
 
 	STATUE ("statue of the youth", Action.TAKE),
 	KEY ("magic key", Action.TAKE),
-	POTION ("potion", Action.DRINK, 10);
+	POTION ("potion", Action.DRINK, 50);
 	
 	private String name;
 	private Action action;

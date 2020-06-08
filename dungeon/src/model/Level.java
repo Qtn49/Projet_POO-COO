@@ -36,9 +36,9 @@ public class Level {
 		Transition t12 = new Transition("You're moving to the next room", r10);
 
 		r1.setEnemy(new Enemy("Gandalf", 60, Weapon.MAGIC_WAND));
-		r5.setEnemy(new Enemy("Troll", 40, Weapon.MASSUE));
-		r7.setEnemy(new Enemy("Orc", 50, Weapon.AXE));
-		r10.setEnemy(new Enemy("Dragon", 100, Weapon.FIRE));
+		r5.setEnemy(new Enemy("Zango, a troll", 40, Weapon.MASSUE));
+		r7.setEnemy(new Enemy("Azog, an orc", 50, Weapon.AXE));
+		r10.setEnemy(new Enemy("Dalinda, a huge dragon", 100, Weapon.FIRE));
 		
 		r6.getEquipment().setCurrentWeapon(Weapon.KNIFE);
 		

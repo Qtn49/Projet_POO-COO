@@ -9,7 +9,7 @@ public enum Weapon {
 	
 	FIST ("own fist", 5, 10),
 	MAGIC_WAND ("magic wand", 5, 40),
-	MASSUE ("huge massue", 10, 20), 
+	MASSUE ("huge massue", 10, 20),
 	FIRE ("fire", 15, 30), 
 	AXE ("axe", 20, 5),
 	KNIFE ("knife", 10, 10);

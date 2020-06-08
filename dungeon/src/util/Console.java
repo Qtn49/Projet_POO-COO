@@ -10,7 +10,7 @@ import java.util.Scanner;
  */
 public class Console {
 
-	private static final int TIME = 0;
+	private static final int TIME = 50;
 	private static Scanner scan = new Scanner(System.in);
 	private static String pattern = "(?i)[";
 

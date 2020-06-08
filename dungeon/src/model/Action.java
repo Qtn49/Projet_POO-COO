@@ -148,6 +148,7 @@ public enum Action {
 	 */
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
+		chance = weapon.getChance();
 	}
 
 	/**

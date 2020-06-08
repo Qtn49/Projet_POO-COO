@@ -56,4 +56,10 @@ public class Enemy extends Fighter {
 		this.music = music;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "The terrible " + super.toString();
+	}
+	
 }

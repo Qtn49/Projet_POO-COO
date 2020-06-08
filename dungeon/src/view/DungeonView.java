@@ -150,7 +150,9 @@ public class DungeonView {
 				Console.print("Lucky you ! You just had your best shot on this one");
 			else
 				Console.print("Critic shot from " + attacker.getName());
-		}else if (attacker.getDamage() > 0)
+		}
+		
+		if (attacker.getDamage() > 0)
 			Console.print((player ? "You give " + defender.getName() : attacker.getName() + " gives you") +  " a " + attacker.getDamage() + " points attack");
 		else
 			Console.print("Ohhh nahhh ! You just missed it !");
@@ -345,6 +347,13 @@ public class DungeonView {
 	public void drink(int health) {
 
 		Console.print("Glooooop, you just drank the best red bull ever !! You're feeling wayy better and now have " + health + " health points !");
+		System.out.println();
+		
+	}
+
+	public void win() {
+		
+		Console.print("Congratulations !! You just successfully gathered all the statues of the youth ! You can now make any wish !");
 		System.out.println();
 		
 	}

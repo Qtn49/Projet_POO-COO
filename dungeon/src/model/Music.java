@@ -22,7 +22,8 @@ public enum Music {
 	COUGH ("Resources/sounds/cough.wav"), 
 	RADIO ("Resources/sounds/radio.wav"),
 	BIRDS ("Resources/sounds/birds.wav"),
-	WATER ("Resources/sounds/water.wav");
+	WATER ("Resources/sounds/water.wav"),
+	MENU ("Resources/sounds/menu.wav");
 	
 	private String filepath;
 	
